@@ -1,0 +1,698 @@
+				VUE JS - VUE 3
+....................................................................................
+
+Pre Knowldege:
+1.HTML 5
+2.CSS 3
+3.Javascript ES 5 and ES 6 (Basic Features)
+4.Node js Fundamentals - npm
+
+Nice to Have
+1.Angular 
+2.React
+
+Vue = Features of Angular + Features of React
+.....................................................................................
+What is Vue.js?
+   Vue.js is a javascript framework for building user interfaces
+
+What is User interface?
+  The application where user interacts.
+
+Types of user interface application:
+
+1.Desktop applications
+2.Web Applications which is running inside browser
+3.Mobile Applications
+   Native
+   Browser based 
+   Hybrid Mobile Application
+4.Other devices based Apps
+
+Web Applications:
+.................
+ The application is built and distributed over internet and accessed by using http protocal.
+
+Types of web application:
+
+Server side Web Application:
+.............................
+
+1.Static web apps - 1989 to 1995
+https://home.cern/science/computing/where-web-was-born
+
+2.Dynamic Content Generation Web App - 1996 to till date
+  -CGI - C,Perl
+  -J2EE - Java, Servlet
+  -ASP - VbScript, vb
+  -PHP - PHP
+  -.net,nodejs,ruby..rails....
+Output: HTML pages generated on fly.
+
+3.Biz to Biz integration:
+   Incase two biz organization want to share their information via internet
+ DCG technology was not enough.
+ Web Services:  1998 to till Date
+  COMMON DATA Interchange format
+   instead of exchanging html pages we can exchange data in the form of XML
+  -XML - Soap Web Services
+ 2005 on wards - REST Full web services
+
+,.............................................................................
+Client side Web Apps:
+
+Browser based :
+ Desktop browsers
+ Mobile browsers
+
+ Powered with HTML With Javascript 
+    Incase of dynamic web apps, html genereated by server and javascript changed and
+ processed html pages at client side.
+
+
+In 2007,W3c Introduced new web development arch, called "Single Page Web Application/SPA"
+
+In SPA
+
+ Client user interface applications were written using "HTML 5,CSS3,Javascript" where as server side applications are "Web Services-REST API" which serves data to the client.
+
+
+
+SPA:
+       Client User App (HTML,CSS,JS)<-------------------> REST API
+
+SPA Frameworks:
+1.Mustache.js
+2.Angular.js
+3.React
+4.Angular
+5.Vue.js
+			.....................................................................................
+			  Client Side Web Technology.
+
+There are there primary languages 
+1.HTML 5
+2.Javascript 
+3.CSS
+
+DOM Programming:
+...............
+
+What is DOM?
+  If you want to understand DOM, u need to undersand 
+
+What is HTML? How it works?
+
+HTML is the programming language,DSL / Declarative Programming language. Domain specific language- Domain specific language is nothing but the language built for sepcific domain, which cant be used for other purposes.
+
+Since HTML is programming language, do you think that language is compiled?
+
+C:
+ hello.c -->compile --->hello.obj(compiled code)--->run compiled code by runtime.
+
+Html:
+ html code itself is compiled and executed - every thing happens within browser - In Memory compilation.
+
+ index.html -->parsing---parsed code--->compilation--->binary code--->run compiled code by runtime-->final output in the screen.
+
+index.html -  source code
+
+<html>
+ <head>
+   <title>HTML</title>
+ </head>
+ <body>
+     <h1>Welcome</h1>
+ </body>
+</html>
+ --------------Browser
+  |
+ loader : load source code into browser
+  |
+  uses protocal 
+   file or http
+  |
+  Parser : Parser is special compiler which converts source code into lexical tree
+           (String tree)
+   |
+
+html
+  head
+   title
+      HTML
+   title
+ head
+ body
+     h1
+      Welcome
+     h1
+ body
+html
+   |
+   compiler: Compilation: convert source code into assembly language
+   |
+html - LOAD XXX
+  head-
+   title
+      HTML
+   title
+ head
+ body
+     h1
+      Welcome
+     h1
+ body
+html
+.............................&&&&&&&&&&&&&..........................................  
+                                Runtime
+
+During runtime, we need to allocate memory for the program.
+
+Runtime will create LinkedList(c) for the entire html document
+
+html - Node
+  head-
+   title
+      HTML
+   title
+ head
+ body -Node
+     h1  - Node
+      Welcome
+     h1
+ body
+html
+
+Nodes are connected each other in Hierchical Structure(Tree)
+
+Linking the Nodes (Tree)
+
+body -Node
+    |
+     h1  - Node
+      |
+        Welcome
+     h1
+ body
+ |
+Layout Engine/Paint Engine
+   |
+  will convert into pxs - Final Ouput
+
+            At End , the html page is "Tree Data Structure"
+
+..........................***.....................................................
+			The Netscap Communication and HTML Tree
+.................................................................................
+Netscap started a project,to access rendered "tree" via program.
+
+Netcap initally decided to introduce c program,later who decided to change their mind to "Java".
+
+Java was not also not suitable , the reason was , java was the big language , putting the language inside browser is not suitable.
+
+Nets cap finally decided who did not want eiter c or java, but java like language
+ - "The Birth of Javascript" 
+
+The Javascript was introduced  as light weight programming language to access the tree,process the tree.
+
+How to reprsent html inside javascript engine?
+ 
+ Netscap took an idea "Object" Model.
+
+Every html element is object, which is created once the browser loads the html into browser,and also object can be created using apis..
+
+Javascript engins forms the tree called "Object Tree"
+
+
+ index.html -->parsing---parsed code--->compilation--->binary code--->run compiled code by runtime-->final output in the screen --->Javascript Engine---creates  objects and forms object tree--->use api to process the tree...
+
+.....................................................................................
+			Netscap Objects and W3c
+.....................................................................................
+
+After Object tree model and javascript success, W3C  decided to standarize this arch/technology.
+
+After standarization, w3c publish a spec called "DOM" -  Document Object Model
+
+
+How dom works?
+
+index.html           Broser runtime(C program)         Javascript Engine
+<h1>Hello</h1>       h1-Node                           h1- Object
+			Hello-Node			 Hello Object Property
+
+
+
+                Every Html ELEMENT Inside Browser is "C Program"
+
+	        Every Html ELEMENT Inside javascript engine is "Object"
+
+HTML Elements(p,h1,div,img) are  represented inside browser as "Node", inside Javascript Engine "Object - DOM "
+
+
+javascript developer ---->uses api --->to communicate Object---->js engine---->browser engine.
+.....................................................................................
+				DOM Programming
+.....................................................................................
+
+How to implement dom programming?
+
+1.using plain js
+  if we use plain js , it is very difficult to build large applications
+
+2.using frameworks and libs
+
+2000 - The first javascript framework - DOJO
+2002-2005 - JQuery - is the second most powerfull dom lib.
+After 2006 - many js libs and frameworks introduced.. 2008(Angular js) 2013(react)...
+
+Popular DOM frameworks/lib:
+1.React
+2.Angular
+3.Vue.js
+
+           "Vue or React or Angular are just DOM abstractions"
+....................................................................................
+		      Vue js and Its Application types
+...................................................................................
+
+Vue.js is a framework used to build "different types of client side apps"
+
+
+1.Standalone script application
+   Enchancing html(genereated by server) by adding javascript /js lib(jquery)
+ 
+if you have traditional web apps written using server side techn like jsp,asp,php which has "js/jquery" lib
+
+    Vue is Declarative  replacement of Imperative "Jquery"
+
+
+2.Web Component Application
+    Vue supports to create web component arch based applications
+
+3.Single Page Web Application(SPA)
+   Vue is Primarily popuplar for building spa applications
+
+4.Full Stack /SSR - Server side Rendered apps.
+ 
+  SSR =  SPA + Server Side Technologies
+
+ Pure SPA's has limitations when the app is sensitive to SEO and time to constent.
+ Every thing happens in the browser side with respective SPA.
+
+ Vue apps can be compiled/render in the server side.
+ Server will generate html pages before sending to the browser(client) - Pre  rendering.
+ https://nuxtjs.org/ -  for ssr with vuejs
+
+5.SSG/JAMStack
+   Server side static file generation(96), instead of build dynamic apps, suppose we need static apps.
+
+  Server-side rendering can be done ahead of time if the required data is static. This means we can pre-render an entire application into HTML and serve them as static files.
+
+ This improves site performance and makes deployment a lot simpler since we no longer need to dynamically render pages on each request. 
+
+Vue can still hydrate such applications to provide rich interactivity on the client. This technique is commonly referred to as Static-Site Generation (SSG), also known as JAMStack.
+
+The Vue team maintains a static-site generator called VitePress, which powers this website you are reading right now! In addition, Nuxt also supports SSG. You can even mix SSR and SSG for different routes in the same Nuxt app.
+				
+https://jamstack.org/
+
+vue supported frameworks - VitePress,Nuxt
+
+
+
+Beyond the Web:
+...............
+
+Although Vue is primarily designed for building web applications, it is by no means limited to just the browser. You can:
+
+Build desktop apps with Electron or Tauri
+Build mobile apps with Ionic Vue
+Build desktop and mobile apps from the same codebase with Quasar
+Use Vue's Custom Renderer API to build custom renderers targeting WebGL or even the terminal!
+
+....................................................................................
+
+App selections:
+
+Whether your app is legacy server side apps built using j2ee or .net,php,rails--->
+ Standalone vue.js
+
+Your app is api centeric(webservices)/microservices
+   Vue can be used as "SPA"
+
+SPA With SSR for better optimization and SEO ready
+
+SPA and SSR With SSG/JAM Stack - where your app is having static data
+.....................................................................................
+				Vue App Development
+....................................................................................
+
+Development work flows:
+
+1.Without Build Tool
+   Build tools like webpack,rollup,vitePress....
+2.With Build Tool
+
+
+Project Setup:
+..............
+
+1.without build tools
+
+2.with build tools
+
+1.without build tools:
+   
+You can create "Standalone Script apps".
+
+Steps:
+
+1.create Project
+
+>mkdir vue-legacy
+
+vue-legacy>mkdir src
+
+vue-legacy>code .
+
+create index.html outside src dir
+
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue-legacy</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+install live server in the vs code
+
+open index.html using live server
+
+
+
+
+in order to integrate vue with existing html
+
+you have to add script which is distributed by vue community via "cdn".
+
+There are two builds:
+1.dev build
+2.prod build
+
+Dev Build
+
+<script src="https://unpkg.com/vue@3"></script>
+
+You are running a development build of Vue.
+Make sure to use the production build (*.prod.js) when deploying for production.
+
+
+Prod Build
+ <script src="https://unpkg.com/vue@3.1.1/dist/vue.global.prod.js"></script>
+
+....................................................................................
+Core concepts of Vue
+....................
+			   Vue Application
+
+Vue is just javascript framework, offers apis,infrastructure to build "DOM" programming.
+
+DOM Programming:
+1.create element or elements 
+   When we create elements we create tree model-DOM tree
+2.update existing elements content
+3.remove/delete existing element content and element itself
+4.list/walk through tree
+5.we may change style dynamically
+6.we interact with ui and change the ui.
+
+Vue is javascript dom programming framework 
+
+There are two ways of programming in UI:
+
+1.imperative programming
+    The way of write program using complex logics, more boiler plate code.
+eg:
+  create element using plain js
+  create element using jQuery
+
+ 
+<body>
+    <h1>Imperative DOM- Create DOM Element using plain js </h1>
+    <div id="root">
+
+    </div>
+    <script>
+        function createElement() {
+            console.log('init...')
+            const Heading = document.createElement('h1');
+            Heading.innerHTML = 'Hello,DOM'
+            Heading.style.color = 'blue'
+            document.getElementById('root').appendChild(Heading)
+        }
+        createElement()
+    </script>
+
+</body>
+
+
+2.declarative programming
+
+ =>write less code
+ =>Abstract DOM apis with readable constructs 
+ =>introduce declarative templates
+Note:
+ Template driven technology introduced in server side computing in 1990's
+ 2006, the first template driven technology was introduced in javascript called
+ mustache.js ( {{}}})
+ Template = static + dynamic  content , where dynamic content is interpolated into code. 
+ eg <h1>Hello {{name}} </h1>
+
+ "Vue is based on declarative , which extends standard HTML with a template syntax"
+				+
+			   java script => binds the state(data)/ biz logic
+
+HTML + Extra Syntax + Bizlogic+data = Vue.js
+
+How vue represents UI?
+
+=>Vue creates UI dynamically(DOM)
+=>Vue organizes the UI into smaller and smaller UI
+=>VUE breaks the complex UI into Smallar UI
+    This model is called called as "Compostion"
+
+Why Compostion?
+=>The UI can be reused any where in the app and also outside app.
+=>The code maintaince is very easy,because it is independant.
+
+	    "The arch is called as Component Driven Arch"
+
+Component means parts of something.
+.....................................................................................
+			 Vue Instance /Application Object
+.....................................................................................
+
+In vuejs, the whole application(User interface), is composed into the object called
+"Vue instance".
+
+Vue Versions:
+
+Vue 2.x
+Vue 3.x
+
+Vue Instance Creation:
+......................
+Vue 2
+......
+
+var app = new Vue({})
+
+Vue 3:
+
+We can get Vue instance:
+
+ 1.Via Global Vue Variable
+ 2.Via ES  6 Modules
+
+			A.Via Global Vue variable
+...................................................................................
+Getting Vue instance:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <h1>Vue Application Instance</h1>
+
+    <script>
+        const vueInstance = Vue 
+        console.log(vueInstance)
+        console.log(vueInstance.version)
+    </script>
+</body>
+</html>
+...................................................................................
+....................................................................................
+			B.Via Es 6 modules
+.....................................................................................
+
+can we use es 6 modules directly inside browser
+
+name.js
+export const name='Subramnaian'
+
+index.js
+import {name} from './name'
+
+
+No, in older browsers
+yes in modern browsers
+
+Generally browser has no facility to link files and share code using "ES 6 modules keyword "
+
+How to run es 6 module based apps inside browsers
+Solution:
+1.Using build tools - webpack,rollup.
+   React,angular uses this tool behind it.
+
+2.Using browser alone
+   using type=module
+
+ Recently browsers vendors added a capability to link files at browser level, this is still in experimental mode- many browsers(old browsers may not support)	
+
+....................................................................................
+			 ES 6 Modules and Browsers
+
+src/name.js
+export const name='Subramanian'
+src/index.js
+import {name} from './name.js'
+
+console.log(name)
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <script src="src/index.js" type="module"></script>
+</head>
+<body>
+    <h1>ES 6 Modules</h1>    
+</body>
+</html>
+
+Note:
+ when you import you have to use "fileName.js"  eg : import {name} './name.js" 
+ in script tag add type="module" attribute
+
+.....................................................................................
+			Can we use import statement inside html
+
+can i import "src/name.js or src/index.js" inside script section of html.
+2.Using browser alone
+   Dynamically Import JavaScript with Import Maps
+
+if you want import any js code within html file.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>    
+    <script type="importmap">
+        {
+          "imports": {
+          
+          }
+        }
+      </script> 
+</head>
+<body>    
+    <!-- <script src="src/index.js" type="module"></script> -->
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Es 6 modules</title>
+    <!-- Polyfil for import map -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+          "imports": {
+            "name":"./src/name.js"
+          }
+        }
+      </script>
+</head>
+<body>
+    <h1>Using ES 6 Modules within HTML</h1>
+    <script type="module">
+        import { name } from 'name'
+        console.log('name', name)
+    </script>
+</body>
+</html>
+
+Note:
+Import Maps Browser Support
+
+Import maps are supported by default in Chromium-based browsers, so we recommend using Chrome or Edge during the learning process.
+
+If using Firefox, it is only supported in version 102+ and currently needs to be enabled via the dom.importMaps.enabled option in about:config.
+
+If your preferred browser does not support import maps yet, you can polyfill it with es-module-shims.
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"></script>
+
+Not for production
+
+The import-maps-based setup is meant for learning only - if you intend to use Vue without build tools in production, make sure to check out the Production Deployment Guide.
+
+How to use vue using importMap syntax:
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Es 6 modules</title>
+    <!-- Polyfil for import map -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+          "imports": {
+            "name":"./src/name.js",
+            "vue" : "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+          }
+        }
+      </script>
+</head>
+....................................................................................
+

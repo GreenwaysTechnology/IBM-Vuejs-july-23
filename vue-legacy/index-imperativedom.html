@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>imperative dom</title>
+</head>
+
+<body>
+    <h1>Imperative DOM- Create DOM Element using plain js </h1>
+    <div id="root">
+
+    </div>
+    <script>
+        function createElement() {
+            console.log('init...')
+            const Heading = document.createElement('h1');
+            Heading.innerHTML = 'Hello,DOM'
+            Heading.style.color = 'blue'
+            document.getElementById('root').appendChild(Heading)
+        }
+        createElement()
+    </script>
+
+</body>
+
+</html>
