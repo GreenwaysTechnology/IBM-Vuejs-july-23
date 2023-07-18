@@ -677,7 +677,6 @@ The import-maps-based setup is meant for learning only - if you intend to use Vu
 How to use vue using importMap syntax:
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -694,5 +693,303 @@ How to use vue using importMap syntax:
         }
       </script>
 </head>
+
+<body>
+    <h1>Using ES 6 Modules within HTML</h1>
+    <script type="module">
+        import { name } from 'name'
+        import { createApp } from 'vue'
+
+        //calling createApp function,which returns "Vue Instance"
+        const app = createApp()
+        console.log(app)
+        console.log(`version`,app.version)
+        console.log('name', name)
+    </script>
+</body>
+
+</html>
 ....................................................................................
+			Vue is Root Instance having lot methods (factory methods)
+
+createApp: (...args) => {…}
+createBlock: ƒ createBlock(type, props, children, patchFlag, dynamicProps)
+createCommentVNode: ƒ createCommentVNode(text = '', // when used as the v-else branch, the comment node must be created as a // block to ensure correct updates. asBlock = false)
+createElementBlock: ƒ createElementBlock(type, props, children, patchFlag, 
+etc...
+
+
+Vue is component based framework, createApp method takes root/Entry component
+
+function createApp(rootComponent: Component, rootProps?: object): App
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+          "imports": {
+              "vue":"https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+          }
+        }
+      </script>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+    <script type="module">
+        //step 1: import factory method
+        import { createApp } from 'vue'
+
+        //step 2 : create app instance and  pass root component
+        const app = createApp({
+            template: `<h1>Welcome to Vue Application</h1>`
+        })
+        console.log(app)
+        //Step 3: mount root component into the root element
+        app.mount('#root')
+
+    </script>
+
+</body>
+
+</html>
+.....................................................................................
+			  User interface Development
+.....................................................................................
+
+User interface development guidelines:
+
+1.User interface must be broken into smallar and smallar -  Compostion - Component model
+
+2.User interface is organized in hierachal structure -  Tree Structure 
+  Thats where html has been designed.
+ We need to follow html tree model
+
+ <div>
+    <div>
+	<div>
+	   
+	</div>
+	
+    </div>
+ </div>
+
+3.In tree model there must be one root element
+..................................................................................
+				Root Component(root Element)
+
+
+In React:
+ function Logo(){
+   
+   return <img src="logo.png"/>
+ 
+}
+In Angular
+
+ @Component({
+   selector:'app-logo'
+   template:`<img src="logo.png"/>
+ }) 
+ export class Logo{
+
+ }
+In Vue:
+ Component is object which is represented as literal object.
+
+const Logo ={
+
+}
+
+What component contains:
+
+ component information can be categorized into various segments.
+
+const Logo ={
+  template:''',
+  render:'''
+  compilerOptions:{},
+  data:function(){}
+}
+
+1.UI/Rendering - HTML,CSS(Markup)
+..................................
+ template
+ render
+ compilerOptions
+
+2.State -(data) - javascript
+ data 
+ props
+ computed
+ methods
+ watch
+ emits
+ expose
+
+3.Life Cycle hooks(methods)
+beforeCreate
+created
+beforeMount
+mounted
+beforeUpdate
+updated
+beforeUnmount
+unmounted
+errorCaptured
+renderTracked
+renderTriggered
+activated
+deactivated
+serverPrefetch
+
+4.Composition
+ provide
+ inject
+ mixins
+ extends
+
+Misc
+name
+inheritAttrs
+components
+directives
+
+Component Instance api and variables
+$data
+$props
+$el
+$options
+$parent
+$root
+$slots
+$refs
+$attrs
+$watch()
+$emit()
+$forceUpdate()
+$nextTick()
+
+
+const Logo ={
+  ui: {},
+  state:{}
+  others:{}
+  methods:{} 
+}
+.....................................................................................
+			Vue Application Setup using Build Tools
+....................................................................................
+
+Build tools are js based tools for create,manage js apps work flows.
+Build tools based on npm tool.
+
+
+Setup Vue Project using build tool based: CLI based apporach.
+.............................................................
+
+There are two cli tools
+
+1.Vue-cli
+  https://cli.vuejs.org/#getting-started
+Vue- cli is now in maintance mode, meaning that , which is only used for creating old vue project(v2)
+
+2.Vite
+https://vitejs.dev/guide/
+Next Generation Frontend Tooling project, used to create no of project types.
+
+We are going to follow Vite base project setup
+
+npm init vue@latest
+
+This is abstraction for vite based project templates
+
+npm init vue@latest
+Need to install the following packages:
+  create-vue@3.7.1
+Ok to proceed? (y) y
+
+Vue.js - The Progressive JavaScript Framework
+
+√ Project name: ... vue-app
+√ Add TypeScript? ... No / Yes
+√ Add JSX Support? ... No / Yes
+√ Add Vue Router for Single Page Application development? ... No / Yes
+√ Add Pinia for state management? ... No / Yes
+√ Add Vitest for Unit Testing? ... No / Yes
+√ Add an End-to-End Testing Solution? » No
+√ Add ESLint for code quality? ... No / Yes
+
+Scaffolding project in E:\session\IBM\2023\July\VueJs\vue-app...
+
+Done. Now run:
+
+  cd vue-app
+  npm install
+  npm run dev
+
+Folders and file structure:
+
+package.json
+{
+  "name": "vue-app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.3.9"
+  }
+}
+
+vite.config.js
+ It is build tool for vue apps
+
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
+})
+
+index.html
+  It is entry file which initalizes the initial DOM and vue app
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
 
