@@ -1246,22 +1246,200 @@ With setup attribute:
 	      	with setup function                           with setup attribute	
 
 ....................................................................................
-</style>
 
-With setup attribute:
-....................
-
-1.vue compiler writes all boiler plate code for us.
-
-<!-- Compsition pattern with setup attribute -->
-<script setup>
-// you can write app logic directly : which looks like regular js code
+Component with Options api:
+...........................
+<!-- Options api pattern -->
+<script>
+// Options Object : we have to return always options Object
+export default {
+   //js logic goes
+}
 </script>
 <template>
-    <h1>Single File Component with Composition api with setup attribute</h1>
+ <h1>Options Api Demo</h1>
 </template>
 <style>
 
 </style>
 
+Component with compostion api : with setup function
+<script>
+export default {
+    setup() {
 
+    }
+}
+</script>
+<template>
+    <h1>Composition api with setup function</h1>
+</template>
+<style>
+
+</style>
+
+Composition with setup attribute:
+<script setup>
+
+</script>
+<template>
+    <h1>Composition api with setup Attribute</h1>
+</template>
+<style>
+
+</style>
+...................................................................................
+				Composition
+..................................................................................
+Organization of Components in hierachical order(tree) pattern
+
+<div id="root">
+    <App>
+	<Hello></Hello>
+    </App>
+</div>
+
+eg:
+
+Component with "Options API"
+ 
+In this pattern, component must be registered inside script
+using components key
+
+src/components/greeter/Hello.vue
+<script>
+</script>
+<template>
+    <h2>Hello</h2>  
+</template>
+<style>
+</style>
+
+src/components/greeter/App.vue
+<script>
+import Hello from "./components/greeter/Hello.vue";
+
+export default {
+    components: { Hello }
+}
+</script>
+<template>
+    <div>
+        <h1>App</h1>
+        <Hello></Hello>
+    </div>
+</template>
+<style>
+
+</style>
+
+Component with "Composition  API with setup function"
+......................................................
+
+src/components/Message.vue
+<!-- composition  api pattern : using setup function -->
+<script>
+export default {
+    setup() {
+
+    }
+}
+</script>
+<template>
+    <h1>Hello</h1>
+</template>
+<style></style> 
+
+src/components/Hello.vue
+
+<script>
+import Message from './Message.vue';
+
+export default {
+    components: { Message },
+    setup() {
+
+    }
+}
+</script>
+<template>
+    <Message></Message>
+</template>
+<style></style>
+
+src/App.vue
+<script>
+// import components
+import Hello from './components/greeter/Hello.vue';
+
+export default {
+    components: {
+        Hello
+    },
+    setup(){
+        
+    }
+}
+</script>
+<template>
+    <Hello></Hello>
+</template>
+<style></style>
+
+Component with "Composition  API with setup attribute"
+......................................................
+
+src/components/Message.vue
+<script setup>
+</script>
+<template>
+    <h1>Hello</h1>
+</template>
+<style></style> 
+
+
+src/components/Hello.vue
+
+<!-- Composition api : using setup attribute -->
+<script setup>
+import Message from './Message.vue';
+</script>
+<template>
+    <Message></Message>
+</template>
+<style></style>
+
+
+src/App.vue
+<!-- Composition api pattern : using setup attribute-->
+<script setup>
+import Hello from './components/greeter/Hello.vue';
+</script>
+<template>
+    <Hello></Hello>
+</template>
+<style></style>
+
+
+Assigment-1:
+............
+Create Layout Components
+
+1.header
+   |
+   Logo
+   SearchPanel
+   LoginPanel
+2.main
+   |
+   three sections
+    -Vue features
+3.Footer
+   |
+   Sponors
+   copyright
+
+You have to try
+
+1.Options api
+2.Compositions api with imperative (setup fun) and declarative Patterns (setup attr)
