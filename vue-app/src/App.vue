@@ -1,12 +1,23 @@
+<!-- State Declaration : Using Compostion api-setup attribute -->
 <script setup>
-import Hello from './components/greeter/Hello.vue';
+const firstName = 'Subramanian'
+const lastName = 'Murugan'
+const address = {
+    city: 'Coimbatore',
+    state: 'Tamil Nadu'
+}
+const points = 120
+const status = true
 </script>
 <template>
-    <!-- Pascal case -->
-    <StatusBar></StatusBar>
-    <Hello></Hello>
-    <!-- dash-case/Kebab-case -->
-    <status-bar></status-bar>
-    <hello></hello>
+    <div>
+        <h1>State Declaration and InterPolation Using Options Api</h1>
+        <div>
+            <h2>Name {{ firstName }} {{ lastName }}</h2>
+            <h2>Address {{ address.city }} {{ address.state }}</h2>
+            <h3>Points {{ points }}</h3>
+            <h3>Status {{ status ? "Available" : "Not Available" }}</h3>
+        </div>
+    </div>
 </template>
 <style></style>

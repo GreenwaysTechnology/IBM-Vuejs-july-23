@@ -1676,11 +1676,264 @@ import Hello from './components/greeter/Hello.vue';
 
 https://devtools.vuejs.org/guide/installation.html
 .....................................................................................
+.....................................................................................
+			    Templates
+...................................................................................
+Template is the representation of View
+View is Runtime representation
+
+Template can be static or dynamic 
+
+Static templates are having pure html code
+Dynamic templates are having html code + Vue instructions
+Vue instructions are special symbols
+  
+Template  = html + vue instructions (data,events,props)
+
+Data Binding:
+.............
+  Passing data from the Component to View and View to Component
+
+Types of Data bidning:
+
+1.interpolation
+2.property /props binding
+3.attribute binding
+4.event binding
+5.Two way data binding
+6.class and style binding
+.....................................................................................
+.....................................................................................
+			  MVC  Architecture
+....................................................................................
+
+In order to build user interface we have architectures
+
+1.MVC 
+  It is the most legacy arch but still more popular arch, used in server side,client   side app developments
+
+2.Flex 
+   It is discovered by face book, in order to replace MVC , primarily used in React..
+
+Vue js is MVC Based  and Flex mixed arch -hybrid arch..
+
+M - Model - State - Data
+V - View  - User interface
+C - Controller - Having data and biz logic
+
+Vue and MVC:
+<script>
+   // M + C ->logic
+</script>
+<template> 
+   View logic 
+</template>
+<style>
+</style>
+
+ Component = {Model+Controller(Script) ,View(template,style)}
+
+...................................................................................
+				Interpolation
+....................................................................................
+
+Transfering data(state) from (controlller) to View.
+
+State:
+  State Can be represented in two ways
+
+1.primitives - numbers,strings,boolean
+  let name='subramanian'
+  let salary=100
+  let isValid=true
+2.objects and collections -  literal object,arrays
+  
+  let profile = {
+    id:1,
+    name:'Arun'
+  }
+  let profiles = [{
+    id:1,
+    name:'Arun'
+  },{
+    id:2,
+    name:'Bala'
+  }]
+SFC:
+ 1.Using Options api
+ 2.Using Composition api
+    -with setup fun
+    -with setup attribute
+
+1.Using Options Api
+    Encapsulate options inside literal object
+
+let options = {
+  data:?
+  props:?
+  methods:?
+}
+
+State Declaration and Options Api:
+.................................
+
+Syntax:
+<script>
+export default {
+   data:function(){
+	return {
+           data:....
+	} //state object 
+   }
+}
+</script>
+
+data is function which encapulsates state(Model)
+data function must return object which encapuslate "state/model".
+
+Syntax: es 6 way of declaration function
+<script>
+export default {
+   data(){
+	return {
+           data:....
+	} //state object 
+   }
+}
+</script>
 
 
+Eg:
+<!-- State Declaration : Using Options api -->
+<script>
+export default {
+    data() {
+        return {
+            name: 'Subramanian' //state
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>State Declaration and InterPolation Using Options Api</h1>
+
+    </div>
+</template>
+<style></style>
+
+How to show the state inside view (template)?
+
+Via Data binding - interpolation {{variable}}
 
 
+Eg:
+State with Options Api:
+<!-- State Declaration : Using Options api -->
+<script>
+export default {
+    data() {
+        return {
+            firstName: 'Subramanian',
+            lastName: 'Murugan',
+            address: {
+                city: 'Coimbatore',
+                state: 'Tamil Nadu'
+            },
+            points: 120,
+            status: true
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>State Declaration and InterPolation Using Options Api</h1>
+        <div>
+            <h2>Name {{ firstName }} {{ lastName }}</h2>
+            <h2>Address {{ address.city }} {{ address.state }}</h2>
+            <h3>Points  {{ points }}</h3>
+            <h3>Status {{ status ? "Available" : "Not Available" }}</h3>
+        </div>
+    </div>
+</template>
+<style></style>
+...................................................................................
+			   Composition Api - Using Setup function
 
+The component logic must be encapsulated inside a function called "setup"
 
+export default {
 
+ setup(){
 
+   return {} //must return state
+ }
+
+}
+
+eg:
+<!-- State Declaration : Using Compostion api-setup function -->
+<script>
+export default {
+    setup() {
+        const firstName = 'Subramanian'
+        const lastName = 'Murugan'
+        const address = {
+            city: 'Coimbatore',
+            state: 'Tamil Nadu'
+        }
+        const points = 120
+        const status = true
+
+        //return object 
+        return {
+            firstName,
+            lastName,
+            address,
+            points,
+            status
+        }
+
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>State Declaration and InterPolation Using Options Api</h1>
+        <div>
+            <h2>Name {{ firstName }} {{ lastName }}</h2>
+            <h2>Address {{ address.city }} {{ address.state }}</h2>
+            <h3>Points {{ points }}</h3>
+            <h3>Status {{ status ? "Available" : "Not Available" }}</h3>
+        </div>
+    </div>
+</template>
+<style></style>
+
+...................................................................................
+			   Composition Api - Using Setup attribute
+
+<!-- State Declaration : Using Compostion api-setup attribute -->
+<script setup>
+const firstName = 'Subramanian'
+const lastName = 'Murugan'
+const address = {
+    city: 'Coimbatore',
+    state: 'Tamil Nadu'
+}
+const points = 120
+const status = true
+</script>
+<template>
+    <div>
+        <h1>State Declaration and InterPolation Using Options Api</h1>
+        <div>
+            <h2>Name {{ firstName }} {{ lastName }}</h2>
+            <h2>Address {{ address.city }} {{ address.state }}</h2>
+            <h3>Points {{ points }}</h3>
+            <h3>Status {{ status ? "Available" : "Not Available" }}</h3>
+        </div>
+    </div>
+</template>
+<style></style>
