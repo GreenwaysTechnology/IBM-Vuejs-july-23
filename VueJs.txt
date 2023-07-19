@@ -1937,3 +1937,438 @@ const status = true
     </div>
 </template>
 <style></style>
+.....................................................................................
+				Directives
+....................................................................................
+
+What is directive?
+  Directive is object which helps to create custom elements and attributes.
+  Directives enchances existing html elements - We extend the functionality of HTML   elements.
+  We are going to add new behaviour to the HTML elements.
+
+Vue is highly modular framework, code Resue is Main Objective.
+
+
+Code Resue Patterns:
+...................
+1.Components
+2.Composables(Hooks)
+3.Directives
+
+
+Components are main building blocks.
+Composable are focused on "Resuing stateful logic" - Data isloation.
+Directives are mainly intented for resuing logic that involes low level DOM Access on Plain Elements -DOM Element features.
+
+HTML elements Types:
+
+1.Built in element and attributes
+2.Custom elements and attributes
+
+<h1>Hello</h1> -  built in element.
+
+HTML Compiler Work flow:
+.......................
+
+
+<h1>Hello</h1> -----Compiler verfies this element is built in or not
+				|
+		   --------------------------------
+		   |                              |
+                 Yes                             No
+		  |                              |
+Browser parses the                    Browser throws exception                       called                                "UnknownElement"
+element and convert                   which is converted into plain ascii node
+it , render accordingly
+
+
+ <app-root>  -----Compiler verfies this element is built in or not
+				|
+		   --------------------------------
+		   |                              |
+                 Yes                             No
+		  |                              |
+Browser parses the                    Browser throws exception                       called                                "UnknownElement"
+element and convert                   which is converted into plain ascii node
+it , render accordingly
+
+
+<app-drawer> - it is custom element, generally browser does not under stand.
+
+In 2007, W3c introduced new idea that developers can add their own tags/elements(custom elements and custom attributes)
+   HTML 5 Specification
+
+built in element logic is already written, so that browser easily understands that.
+
+What about custom element, how to teach browser to understand custom elements?
+    
+  "Through Javascript"
+
+<app-drawer> ---|JS Code--->Runs ---renders in the browser....
+
+eg:
+<script setup>
+import AppDrawer from './components/drawer/AppDrawer.vue'
+</script>
+<template>
+<h1>Drawer App</h1>
+<!-- Custom element -->
+<app-drawer></app-drawer>
+</template>
+<style>
+
+</style>
+
+src/componnets/drawer/AppDrawer.vue
+<script setup>
+</script>
+<template>
+    <p>Drawer Element</p>
+</template>
+<style>
+</style>
+
+ 		"Every Component is a Custom element only"
+
+.....................................................................................
+			Custom Attributes
+.....................................................................................
+
+1.Built in element Attributes
+
+ <img src="" alt="">
+       |      |
+   Attributes - Built in attributes
+
+Browser knows how to put logic to src and alt.
+
+2.Custom attributes on existing html elements
+
+<img customAttribute />
+        | 
+     custom attribute
+How to teach browser to parse custom Attributes 
+  "Through Javascript"
+
+eg: Vue rendered page:
+
+<div id="app" data-v-app="">
+<h1>Drawer App</h1>
+ <!-- Custom element --><p>Drawer Element</p>
+</div>
+.....................................................................................
+	Vue.js Helps to add Custom attributes on existing elements via "Directives" -				Attribute Directives
+.....................................................................................
+Vue js attribute directive syntax:
+
+v-directiveName
+
+Built in Directives:
+...................
+v-text
+v-html
+v-show
+v-if
+v-else
+v-else-if
+v-for
+v-on
+v-bind
+v-model
+v-slot
+v-pre
+v-once
+v-memo
+v-cloak
+
+Special Attributes
+key
+ref
+is
+.....................................................................................
+			    v-html and v-text
+...................................................................................
+
+v-html :
+ inserts data into html element as "HTML"  - innerHTML 
+{{}} 
+  inserts data into html element as "Plain Text"
+
+				v-text
+
+Update the element's text content. - innerText
+
+<script setup>
+//variable
+const name = 'Subramanian'
+</script>
+<template>
+    <h1>Interpolation using mustace notation</h1>
+    <h2>Name {{name}}</h2>
+    <h1>Interpolation using using Directives-text </h1>
+    <h2 v-text="`name ${name}`"></h2>
+    <h1>Interpolation using using Directives-html </h1>
+    <h2 v-html="`name ${name}`"></h2>
+</template>
+<style>
+
+</style>
+...................................................................................
+			 v-bind
+...................................................................................
+
+V-binds html attributes values or components values(properties) dynamically.
+
+Binding: Attach value to the attribute
+
+Static Binding
+  <img src="logo.png"/>
+	|         |
+       attribute  attributevalue
+here value of src cant be changed once the ui rendered
+
+<script setup>
+const imageUrl = "/src/assets/logo.svg"
+const isEnabled = true
+const isHidden = false
+</script>
+<template>
+    <div>
+        <h1>Bind Directives</h1>
+        <div>
+            <h1>Static Binding</h1>
+            <img src="./assets/logo.svg" height="100" width="100" />
+        </div>
+        <div>
+            <h1>Dynamic Binding with v-bind</h1>
+            <img v-bind:src="imageUrl" height="100" width="100"/>
+        </div>
+        <div>
+            <h1>Dynamic Binding with v-bind with short cut</h1>
+            <img :src="imageUrl" height="100" width="100"/>
+        </div>
+        <div>
+            <h1>Dynamic Binding with v-bind Button enabled</h1>
+            <button :disabled="isEnabled">Click</button>
+        </div>
+        <div>
+            <h1>Dynamic Binding with v-bind Article hidden</h1>
+            <article :hidden="isHidden">
+                <p>This is vue article</p>
+            </article>
+        </div>
+    </div>
+</template>
+<style></style>
+.....................................................................................
+				Props
+.....................................................................................
+.....................................................................................
+			Component Driven Design principles
+.....................................................................................
+
+Role of Components / Responsibility of Component:
+..................................................
+
+Component having state,bizlogic,ui
+
+As per component design design principles , we need to apply modularity concept.
+  Break the component based on two aspects
+
+1.Having data and biz logic
+    -Parent Component /Container component
+2.Having UI logic
+    -Child Component/Presentational Component
+
+
+Data(State) Sharing Patterns/ Data(State) Representation Patterns:
+....................................................
+
+1.Props Pattern
+  The data is shared from the Parent Component to Child Component.
+2.State Pattern
+  The data is reprensented with in component and mutate it.   
+
+From Parent Component template:
+
+   <ProductDetails title="Product Details" ></ProductDetails>
+                     |            |
+                  PropertyName   Property value
+   <div id="">
+	 |
+       attribute
+
+How to structure a Large scale vue.js app
+
+Default strcture
+
+src
+  |
+  components
+    |
+    User 
+    Product
+    Comments
+    Payment
+
+Standard Structure of apps would be domain model
+
+src
+  |
+  components
+    |
+    User 
+      Userlist.vue
+      UserDetails.vue
+      User.vue
+   Product	
+      ProductList.vue
+      ProductDetails.vue
+      Product.vue
+   stores
+   layouts
+   plugins
+   directives
+   helpers/utils
+....................................................................................
+			 Props - Pattern implementation
+.....................................................................................
+
+How to pass data from parent component to child component?
+
+since we have many coding pattern (options api, composition api).
+
+Props with Options api:
+.......................
+
+src/components/ProductMaster.vue
+<script>
+import ProductDetails from './ProductDetails.vue'
+export default {
+    components: {
+        ProductDetails
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>Product Master</h1>
+        <!-- title is prop -->
+        <ProductDetails title="Product Page" />
+    </div>
+</template>
+
+
+src/components/ProductDetails.vue
+<script>
+export default {
+    props: ['title']
+}
+</script>
+<template>
+    <div>
+        <h1>{{title}}</h1>
+    </div>
+</template>
+
+src/App.vue
+<script>
+import ProductMaster from './components/products/ProductMaster.vue'
+
+export default {
+    components: { ProductMaster }
+}
+</script>
+<template>
+    <div>
+        <h1>App</h1>
+        <ProductMaster></ProductMaster>
+    </div>
+</template>
+
+How to pass data to component as prop:
+
+
+src/components/ProductMaster.vue
+<script>
+import ProductDetails from './ProductDetails.vue'
+export default {
+    components: {
+        ProductDetails
+    },
+    data() {
+        return {
+            product: {
+                id: 1,
+                name: 'Phone',
+                qty: 100,
+                price: 1000,
+                inStock: 'true'
+            }
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>Product Master</h1>
+        <!-- title and product  are prop : title is static prop product is dynamic prop -->
+        <ProductDetails title="Product Page-1" :product="product" />
+        <ProductDetails title="Product Page-2" :product="product" />
+        <ProductDetails title="Product Page-3" :product="product" />
+        <ProductDetails title="Product Page-4" :product="product" />
+        <ProductDetails title="Product Page-5" :product="product" />
+
+    </div>
+</template>
+
+
+src/components/ProductDetails.vue
+<script>
+export default {
+    props: ['title','product']
+}
+</script>
+<template>
+    <div>
+        <h1>{{title}}</h1>
+        <h2>Id {{product.id}}</h2>
+        <h2>Name {{product.name}}</h2>
+        <h2>Price {{product.price}}</h2>
+        <h2>Qty {{product.qty}}</h2>
+        <h2>Stock {{product.inStock ? "Available" : "Not Available"}}</h2>
+
+
+    </div>
+</template>
+
+
+src/App.vue
+<script>
+import ProductMaster from './components/products/ProductMaster.vue'
+
+export default {
+    components: { ProductMaster }
+}
+</script>
+<template>
+    <div>
+        <h1>App</h1>
+        <ProductMaster></ProductMaster>
+    </div>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
