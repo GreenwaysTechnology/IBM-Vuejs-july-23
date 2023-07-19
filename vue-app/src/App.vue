@@ -1,46 +1,12 @@
-<!-- Options api pattern -->
-<!-- <script>
-// import components
-import Hello from './components/greeter/Hello.vue';
-
-export default {
-    //configurations
-    //Component Registration
-    components: {
-        Hello
-    }
-}
-</script>
-<template>
-    <Hello></Hello>
-</template>
-<style></style> -->
-
-<!-- Composition api pattern : using setup function -->
-
-<!-- <script>
-// import components
-import Hello from './components/greeter/Hello.vue';
-
-export default {
-    components: {
-        Hello
-    },
-    setup(){
-
-    }
-}
-</script>
-<template>
-    <Hello></Hello>
-</template>
-<style></style> -->
-
-<!-- Composition api pattern : using setup attribute -->
 <script setup>
 import Hello from './components/greeter/Hello.vue';
 </script>
 <template>
+    <!-- Pascal case -->
+    <StatusBar></StatusBar>
     <Hello></Hello>
+    <!-- dash-case/Kebab-case -->
+    <status-bar></status-bar>
+    <hello></hello>
 </template>
 <style></style>
