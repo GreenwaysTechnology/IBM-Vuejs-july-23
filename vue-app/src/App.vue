@@ -1,13 +1,14 @@
-<script>
-import ProductMaster from './components/products/ProductMaster.vue'
-
-export default {
-    components: { ProductMaster }
-}
+<script setup>
+import User from './components/profile/User.vue';
+// const name = "Subramanian" 
+const name = 122323
+const disabled = true
 </script>
 <template>
-    <div>
-        <h1>App</h1>
-        <ProductMaster></ProductMaster>
-    </div>
+    <User :name="name" :disabled="disabled"></User>
+    <!-- Boolean :Boolean has special casting rules to mimic the behavior of the native boolean elements -->
+    <User disabled></User>
+    <User></User>
+
 </template>
+<style></style>
