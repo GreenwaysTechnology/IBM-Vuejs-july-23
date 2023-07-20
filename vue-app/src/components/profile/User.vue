@@ -10,6 +10,9 @@ const props = defineProps({
     }
 
 })
+ //update name 
+ props.name ='Murugan'
+
 </script>
 <template>
     <div>

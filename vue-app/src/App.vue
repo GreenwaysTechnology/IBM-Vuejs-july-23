@@ -1,14 +1,13 @@
 <script setup>
-import User from './components/profile/User.vue';
-// const name = "Subramanian" 
-const name = 122323
-const disabled = true
+import { ref } from 'vue'
+let like = ref(0)
+let dislike = ref(100)
+
 </script>
 <template>
-    <User :name="name" :disabled="disabled"></User>
-    <!-- Boolean :Boolean has special casting rules to mimic the behavior of the native boolean elements -->
-    <User disabled></User>
-    <User></User>
-
+    <div>
+        <h1>Like {{ like }} Dislike {{ dislike }}</h1>
+        <button @click="like++">Like</button>
+        <button @click="dislike++">Dislike</button>
+    </div>
 </template>
-<style></style>
