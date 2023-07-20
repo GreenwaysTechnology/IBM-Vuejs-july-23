@@ -1,0 +1,3107 @@
+				VUE JS - VUE 3
+....................................................................................
+
+Pre Knowldege:
+1.HTML 5
+2.CSS 3
+3.Javascript ES 5 and ES 6 (Basic Features)
+4.Node js Fundamentals - npm
+
+Nice to Have
+1.Angular 
+2.React
+
+Vue = Features of Angular + Features of React
+.....................................................................................
+What is Vue.js?
+   Vue.js is a javascript framework for building user interfaces
+
+What is User interface?
+  The application where user interacts.
+
+Types of user interface application:
+
+1.Desktop applications
+2.Web Applications which is running inside browser
+3.Mobile Applications
+   Native
+   Browser based 
+   Hybrid Mobile Application
+4.Other devices based Apps
+
+Web Applications:
+.................
+ The application is built and distributed over internet and accessed by using http protocal.
+
+Types of web application:
+
+Server side Web Application:
+.............................
+
+1.Static web apps - 1989 to 1995
+https://home.cern/science/computing/where-web-was-born
+
+2.Dynamic Content Generation Web App - 1996 to till date
+  -CGI - C,Perl
+  -J2EE - Java, Servlet
+  -ASP - VbScript, vb
+  -PHP - PHP
+  -.net,nodejs,ruby..rails....
+Output: HTML pages generated on fly.
+
+3.Biz to Biz integration:
+   Incase two biz organization want to share their information via internet
+ DCG technology was not enough.
+ Web Services:  1998 to till Date
+  COMMON DATA Interchange format
+   instead of exchanging html pages we can exchange data in the form of XML
+  -XML - Soap Web Services
+ 2005 on wards - REST Full web services
+
+,.............................................................................
+Client side Web Apps:
+
+Browser based :
+ Desktop browsers
+ Mobile browsers
+
+ Powered with HTML With Javascript 
+    Incase of dynamic web apps, html genereated by server and javascript changed and
+ processed html pages at client side.
+
+
+In 2007,W3c Introduced new web development arch, called "Single Page Web Application/SPA"
+
+In SPA
+
+ Client user interface applications were written using "HTML 5,CSS3,Javascript" where as server side applications are "Web Services-REST API" which serves data to the client.
+
+
+
+SPA:
+       Client User App (HTML,CSS,JS)<-------------------> REST API
+
+SPA Frameworks:
+1.Mustache.js
+2.Angular.js
+3.React
+4.Angular
+5.Vue.js
+			.....................................................................................
+			  Client Side Web Technology.
+
+There are there primary languages 
+1.HTML 5
+2.Javascript 
+3.CSS
+
+DOM Programming:
+...............
+
+What is DOM?
+  If you want to understand DOM, u need to undersand 
+
+What is HTML? How it works?
+
+HTML is the programming language,DSL / Declarative Programming language. Domain specific language- Domain specific language is nothing but the language built for sepcific domain, which cant be used for other purposes.
+
+Since HTML is programming language, do you think that language is compiled?
+
+C:
+ hello.c -->compile --->hello.obj(compiled code)--->run compiled code by runtime.
+
+Html:
+ html code itself is compiled and executed - every thing happens within browser - In Memory compilation.
+
+ index.html -->parsing---parsed code--->compilation--->binary code--->run compiled code by runtime-->final output in the screen.
+
+index.html -  source code
+
+<html>
+ <head>
+   <title>HTML</title>
+ </head>
+ <body>
+     <h1>Welcome</h1>
+ </body>
+</html>
+ --------------Browser
+  |
+ loader : load source code into browser
+  |
+  uses protocal 
+   file or http
+  |
+  Parser : Parser is special compiler which converts source code into lexical tree
+           (String tree)
+   |
+
+html
+  head
+   title
+      HTML
+   title
+ head
+ body
+     h1
+      Welcome
+     h1
+ body
+html
+   |
+   compiler: Compilation: convert source code into assembly language
+   |
+html - LOAD XXX
+  head-
+   title
+      HTML
+   title
+ head
+ body
+     h1
+      Welcome
+     h1
+ body
+html
+.............................&&&&&&&&&&&&&..........................................  
+                                Runtime
+
+During runtime, we need to allocate memory for the program.
+
+Runtime will create LinkedList(c) for the entire html document
+
+html - Node
+  head-
+   title
+      HTML
+   title
+ head
+ body -Node
+     h1  - Node
+      Welcome
+     h1
+ body
+html
+
+Nodes are connected each other in Hierchical Structure(Tree)
+
+Linking the Nodes (Tree)
+
+body -Node
+    |
+     h1  - Node
+      |
+        Welcome
+     h1
+ body
+ |
+Layout Engine/Paint Engine
+   |
+  will convert into pxs - Final Ouput
+
+            At End , the html page is "Tree Data Structure"
+
+..........................***.....................................................
+			The Netscap Communication and HTML Tree
+.................................................................................
+Netscap started a project,to access rendered "tree" via program.
+
+Netcap initally decided to introduce c program,later who decided to change their mind to "Java".
+
+Java was not also not suitable , the reason was , java was the big language , putting the language inside browser is not suitable.
+
+Nets cap finally decided who did not want eiter c or java, but java like language
+ - "The Birth of Javascript" 
+
+The Javascript was introduced  as light weight programming language to access the tree,process the tree.
+
+How to reprsent html inside javascript engine?
+ 
+ Netscap took an idea "Object" Model.
+
+Every html element is object, which is created once the browser loads the html into browser,and also object can be created using apis..
+
+Javascript engins forms the tree called "Object Tree"
+
+
+ index.html -->parsing---parsed code--->compilation--->binary code--->run compiled code by runtime-->final output in the screen --->Javascript Engine---creates  objects and forms object tree--->use api to process the tree...
+
+.....................................................................................
+			Netscap Objects and W3c
+.....................................................................................
+
+After Object tree model and javascript success, W3C  decided to standarize this arch/technology.
+
+After standarization, w3c publish a spec called "DOM" -  Document Object Model
+
+
+How dom works?
+
+index.html           Broser runtime(C program)         Javascript Engine
+<h1>Hello</h1>       h1-Node                           h1- Object
+			Hello-Node			 Hello Object Property
+
+
+
+                Every Html ELEMENT Inside Browser is "C Program"
+
+	        Every Html ELEMENT Inside javascript engine is "Object"
+
+HTML Elements(p,h1,div,img) are  represented inside browser as "Node", inside Javascript Engine "Object - DOM "
+
+
+javascript developer ---->uses api --->to communicate Object---->js engine---->browser engine.
+.....................................................................................
+				DOM Programming
+.....................................................................................
+
+How to implement dom programming?
+
+1.using plain js
+  if we use plain js , it is very difficult to build large applications
+
+2.using frameworks and libs
+
+2000 - The first javascript framework - DOJO
+2002-2005 - JQuery - is the second most powerfull dom lib.
+After 2006 - many js libs and frameworks introduced.. 2008(Angular js) 2013(react)...
+
+Popular DOM frameworks/lib:
+1.React
+2.Angular
+3.Vue.js
+
+           "Vue or React or Angular are just DOM abstractions"
+....................................................................................
+		      Vue js and Its Application types
+...................................................................................
+
+Vue.js is a framework used to build "different types of client side apps"
+
+
+1.Standalone script application
+   Enchancing html(genereated by server) by adding javascript /js lib(jquery)
+ 
+if you have traditional web apps written using server side techn like jsp,asp,php which has "js/jquery" lib
+
+    Vue is Declarative  replacement of Imperative "Jquery"
+
+
+2.Web Component Application
+    Vue supports to create web component arch based applications
+
+3.Single Page Web Application(SPA)
+   Vue is Primarily popuplar for building spa applications
+
+4.Full Stack /SSR - Server side Rendered apps.
+ 
+  SSR =  SPA + Server Side Technologies
+
+ Pure SPA's has limitations when the app is sensitive to SEO and time to constent.
+ Every thing happens in the browser side with respective SPA.
+
+ Vue apps can be compiled/render in the server side.
+ Server will generate html pages before sending to the browser(client) - Pre  rendering.
+ https://nuxtjs.org/ -  for ssr with vuejs
+
+5.SSG/JAMStack
+   Server side static file generation(96), instead of build dynamic apps, suppose we need static apps.
+
+  Server-side rendering can be done ahead of time if the required data is static. This means we can pre-render an entire application into HTML and serve them as static files.
+
+ This improves site performance and makes deployment a lot simpler since we no longer need to dynamically render pages on each request. 
+
+Vue can still hydrate such applications to provide rich interactivity on the client. This technique is commonly referred to as Static-Site Generation (SSG), also known as JAMStack.
+
+The Vue team maintains a static-site generator called VitePress, which powers this website you are reading right now! In addition, Nuxt also supports SSG. You can even mix SSR and SSG for different routes in the same Nuxt app.
+				
+https://jamstack.org/
+
+vue supported frameworks - VitePress,Nuxt
+
+
+
+Beyond the Web:
+...............
+
+Although Vue is primarily designed for building web applications, it is by no means limited to just the browser. You can:
+
+Build desktop apps with Electron or Tauri
+Build mobile apps with Ionic Vue
+Build desktop and mobile apps from the same codebase with Quasar
+Use Vue's Custom Renderer API to build custom renderers targeting WebGL or even the terminal!
+
+....................................................................................
+
+App selections:
+
+Whether your app is legacy server side apps built using j2ee or .net,php,rails--->
+ Standalone vue.js
+
+Your app is api centeric(webservices)/microservices
+   Vue can be used as "SPA"
+
+SPA With SSR for better optimization and SEO ready
+
+SPA and SSR With SSG/JAM Stack - where your app is having static data
+.....................................................................................
+				Vue App Development
+....................................................................................
+
+Development work flows:
+
+1.Without Build Tool
+   Build tools like webpack,rollup,vitePress....
+2.With Build Tool
+
+
+Project Setup:
+..............
+
+1.without build tools
+
+2.with build tools
+
+1.without build tools:
+   
+You can create "Standalone Script apps".
+
+Steps:
+
+1.create Project
+
+>mkdir vue-legacy
+
+vue-legacy>mkdir src
+
+vue-legacy>code .
+
+create index.html outside src dir
+
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue-legacy</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+install live server in the vs code
+
+open index.html using live server
+
+
+
+
+in order to integrate vue with existing html
+
+you have to add script which is distributed by vue community via "cdn".
+
+There are two builds:
+1.dev build
+2.prod build
+
+Dev Build
+
+<script src="https://unpkg.com/vue@3"></script>
+
+You are running a development build of Vue.
+Make sure to use the production build (*.prod.js) when deploying for production.
+
+
+Prod Build
+ <script src="https://unpkg.com/vue@3.1.1/dist/vue.global.prod.js"></script>
+
+....................................................................................
+Core concepts of Vue
+....................
+			   Vue Application
+
+Vue is just javascript framework, offers apis,infrastructure to build "DOM" programming.
+
+DOM Programming:
+1.create element or elements 
+   When we create elements we create tree model-DOM tree
+2.update existing elements content
+3.remove/delete existing element content and element itself
+4.list/walk through tree
+5.we may change style dynamically
+6.we interact with ui and change the ui.
+
+Vue is javascript dom programming framework 
+
+There are two ways of programming in UI:
+
+1.imperative programming
+    The way of write program using complex logics, more boiler plate code.
+eg:
+  create element using plain js
+  create element using jQuery
+
+ 
+<body>
+    <h1>Imperative DOM- Create DOM Element using plain js </h1>
+    <div id="root">
+
+    </div>
+    <script>
+        function createElement() {
+            console.log('init...')
+            const Heading = document.createElement('h1');
+            Heading.innerHTML = 'Hello,DOM'
+            Heading.style.color = 'blue'
+            document.getElementById('root').appendChild(Heading)
+        }
+        createElement()
+    </script>
+
+</body>
+
+
+2.declarative programming
+
+ =>write less code
+ =>Abstract DOM apis with readable constructs 
+ =>introduce declarative templates
+Note:
+ Template driven technology introduced in server side computing in 1990's
+ 2006, the first template driven technology was introduced in javascript called
+ mustache.js ( {{}}})
+ Template = static + dynamic  content , where dynamic content is interpolated into code. 
+ eg <h1>Hello {{name}} </h1>
+
+ "Vue is based on declarative , which extends standard HTML with a template syntax"
+				+
+			   java script => binds the state(data)/ biz logic
+
+HTML + Extra Syntax + Bizlogic+data = Vue.js
+
+How vue represents UI?
+
+=>Vue creates UI dynamically(DOM)
+=>Vue organizes the UI into smaller and smaller UI
+=>VUE breaks the complex UI into Smallar UI
+    This model is called called as "Compostion"
+
+Why Compostion?
+=>The UI can be reused any where in the app and also outside app.
+=>The code maintaince is very easy,because it is independant.
+
+	    "The arch is called as Component Driven Arch"
+
+Component means parts of something.
+.....................................................................................
+			 Vue Instance /Application Object
+.....................................................................................
+
+In vuejs, the whole application(User interface), is composed into the object called
+"Vue instance".
+
+Vue Versions:
+
+Vue 2.x
+Vue 3.x
+
+Vue Instance Creation:
+......................
+Vue 2
+......
+
+var app = new Vue({})
+
+Vue 3:
+
+We can get Vue instance:
+
+ 1.Via Global Vue Variable
+ 2.Via ES  6 Modules
+
+			A.Via Global Vue variable
+...................................................................................
+Getting Vue instance:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <h1>Vue Application Instance</h1>
+
+    <script>
+        const vueInstance = Vue 
+        console.log(vueInstance)
+        console.log(vueInstance.version)
+    </script>
+</body>
+</html>
+...................................................................................
+....................................................................................
+			B.Via Es 6 modules
+.....................................................................................
+
+can we use es 6 modules directly inside browser
+
+name.js
+export const name='Subramnaian'
+
+index.js
+import {name} from './name'
+
+
+No, in older browsers
+yes in modern browsers
+
+Generally browser has no facility to link files and share code using "ES 6 modules keyword "
+
+How to run es 6 module based apps inside browsers
+Solution:
+1.Using build tools - webpack,rollup.
+   React,angular uses this tool behind it.
+
+2.Using browser alone
+   using type=module
+
+ Recently browsers vendors added a capability to link files at browser level, this is still in experimental mode- many browsers(old browsers may not support)	
+
+....................................................................................
+			 ES 6 Modules and Browsers
+
+src/name.js
+export const name='Subramanian'
+src/index.js
+import {name} from './name.js'
+
+console.log(name)
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <script src="src/index.js" type="module"></script>
+</head>
+<body>
+    <h1>ES 6 Modules</h1>    
+</body>
+</html>
+
+Note:
+ when you import you have to use "fileName.js"  eg : import {name} './name.js" 
+ in script tag add type="module" attribute
+
+.....................................................................................
+			Can we use import statement inside html
+
+can i import "src/name.js or src/index.js" inside script section of html.
+2.Using browser alone
+   Dynamically Import JavaScript with Import Maps
+
+if you want import any js code within html file.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>    
+    <script type="importmap">
+        {
+          "imports": {
+          
+          }
+        }
+      </script> 
+</head>
+<body>    
+    <!-- <script src="src/index.js" type="module"></script> -->
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Es 6 modules</title>
+    <!-- Polyfil for import map -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+          "imports": {
+            "name":"./src/name.js"
+          }
+        }
+      </script>
+</head>
+<body>
+    <h1>Using ES 6 Modules within HTML</h1>
+    <script type="module">
+        import { name } from 'name'
+        console.log('name', name)
+    </script>
+</body>
+</html>
+
+Note:
+Import Maps Browser Support
+
+Import maps are supported by default in Chromium-based browsers, so we recommend using Chrome or Edge during the learning process.
+
+If using Firefox, it is only supported in version 102+ and currently needs to be enabled via the dom.importMaps.enabled option in about:config.
+
+If your preferred browser does not support import maps yet, you can polyfill it with es-module-shims.
+
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"></script>
+
+Not for production
+
+The import-maps-based setup is meant for learning only - if you intend to use Vue without build tools in production, make sure to check out the Production Deployment Guide.
+
+How to use vue using importMap syntax:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Es 6 modules</title>
+    <!-- Polyfil for import map -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+          "imports": {
+            "name":"./src/name.js",
+            "vue" : "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+          }
+        }
+      </script>
+</head>
+
+<body>
+    <h1>Using ES 6 Modules within HTML</h1>
+    <script type="module">
+        import { name } from 'name'
+        import { createApp } from 'vue'
+
+        //calling createApp function,which returns "Vue Instance"
+        const app = createApp()
+        console.log(app)
+        console.log(`version`,app.version)
+        console.log('name', name)
+    </script>
+</body>
+
+</html>
+....................................................................................
+			Vue is Root Instance having lot methods (factory methods)
+
+createApp: (...args) => {…}
+createBlock: ƒ createBlock(type, props, children, patchFlag, dynamicProps)
+createCommentVNode: ƒ createCommentVNode(text = '', // when used as the v-else branch, the comment node must be created as a // block to ensure correct updates. asBlock = false)
+createElementBlock: ƒ createElementBlock(type, props, children, patchFlag, 
+etc...
+
+
+Vue is component based framework, createApp method takes root/Entry component
+
+function createApp(rootComponent: Component, rootProps?: object): App
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+          "imports": {
+              "vue":"https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+          }
+        }
+      </script>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+    <script type="module">
+        //step 1: import factory method
+        import { createApp } from 'vue'
+
+        //step 2 : create app instance and  pass root component
+        const app = createApp({
+            template: `<h1>Welcome to Vue Application</h1>`
+        })
+        console.log(app)
+        //Step 3: mount root component into the root element
+        app.mount('#root')
+
+    </script>
+
+</body>
+
+</html>
+.....................................................................................
+			  User interface Development
+.....................................................................................
+
+User interface development guidelines:
+
+1.User interface must be broken into smallar and smallar -  Compostion - Component model
+
+2.User interface is organized in hierachal structure -  Tree Structure 
+  Thats where html has been designed.
+ We need to follow html tree model
+
+ <div>
+    <div>
+	<div>
+	   
+	</div>
+	
+    </div>
+ </div>
+
+3.In tree model there must be one root element
+..................................................................................
+				Root Component(root Element)
+
+
+In React:
+ function Logo(){
+   
+   return <img src="logo.png"/>
+ 
+}
+In Angular
+
+ @Component({
+   selector:'app-logo'
+   template:`<img src="logo.png"/>
+ }) 
+ export class Logo{
+
+ }
+In Vue:
+ Component is object which is represented as literal object.
+
+const Logo ={
+
+}
+
+What component contains:
+
+ component information can be categorized into various segments.
+
+const Logo ={
+  template:''',
+  render:'''
+  compilerOptions:{},
+  data:function(){}
+}
+
+1.UI/Rendering - HTML,CSS(Markup)
+..................................
+ template
+ render
+ compilerOptions
+
+2.State -(data) - javascript
+ data 
+ props
+ computed
+ methods
+ watch
+ emits
+ expose
+
+3.Life Cycle hooks(methods)
+beforeCreate
+created
+beforeMount
+mounted
+beforeUpdate
+updated
+beforeUnmount
+unmounted
+errorCaptured
+renderTracked
+renderTriggered
+activated
+deactivated
+serverPrefetch
+
+4.Composition
+ provide
+ inject
+ mixins
+ extends
+
+Misc
+name
+inheritAttrs
+components
+directives
+
+Component Instance api and variables
+$data
+$props
+$el
+$options
+$parent
+$root
+$slots
+$refs
+$attrs
+$watch()
+$emit()
+$forceUpdate()
+$nextTick()
+
+
+const Logo ={
+  ui: {},
+  state:{}
+  others:{}
+  methods:{} 
+}
+.....................................................................................
+			Vue Application Setup using Build Tools
+....................................................................................
+
+Build tools are js based tools for create,manage js apps work flows.
+Build tools based on npm tool.
+
+
+Setup Vue Project using build tool based: CLI based apporach.
+.............................................................
+
+There are two cli tools
+
+1.Vue-cli
+  https://cli.vuejs.org/#getting-started
+Vue- cli is now in maintance mode, meaning that , which is only used for creating old vue project(v2)
+
+2.Vite
+https://vitejs.dev/guide/
+Next Generation Frontend Tooling project, used to create no of project types.
+
+We are going to follow Vite base project setup
+
+npm init vue@latest
+
+This is abstraction for vite based project templates
+
+npm init vue@latest
+Need to install the following packages:
+  create-vue@3.7.1
+Ok to proceed? (y) y
+
+Vue.js - The Progressive JavaScript Framework
+
+√ Project name: ... vue-app
+√ Add TypeScript? ... No / Yes
+√ Add JSX Support? ... No / Yes
+√ Add Vue Router for Single Page Application development? ... No / Yes
+√ Add Pinia for state management? ... No / Yes
+√ Add Vitest for Unit Testing? ... No / Yes
+√ Add an End-to-End Testing Solution? » No
+√ Add ESLint for code quality? ... No / Yes
+
+Scaffolding project in E:\session\IBM\2023\July\VueJs\vue-app...
+
+Done. Now run:
+
+  cd vue-app
+  npm install
+  npm run dev
+
+Folders and file structure:
+
+package.json
+{
+  "name": "vue-app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.3.9"
+  }
+}
+
+vite.config.js
+ It is build tool for vue apps
+
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
+})
+
+index.html
+  It is entry file which initalizes the initial DOM and vue app
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+....................................................................................
+				Vue coding style
+....................................................................................
+Vue coding can be classified into two category
+
+Vue 2.X and Vue 3.X
+
+Api classification:
+...................
+
+1.Options Api Based Style - Vue 2.x Style and Vue 3.x
+2.Composition Api Based Style  -Vue 3.x Style
+
+.....................................................................................
+			 Components Creational Patterns
+....................................................................................
+
+1.Plain Java script Pattern
+
+App.js
+export default {
+  
+  ...options 
+  
+}
+
+It is more imperative way of creating components
+
+2.Single File Components -SFC
+
+ It is more declarative way of creating components
+ As name suggest, All Component logic inside single file.
+
+
+Plain Javascript pattern is used inside "Standalone script application" - without build tool
+
+SFC pattern is used inside "build work flow"
+
+
+How to create component without build tool.
+
+eg: Plain JS pattern
+src/components/App.js
+//Component creation based on js extension: without build tool 
+export default {
+    template: `
+             <h1>Vue Application!</h1>
+            `,
+    //rest of the apis
+
+}
+
+index.html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Polyfil lib for importmap -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+          "imports": {
+              "vue":"https://unpkg.com/vue@3/dist/vue.esm-browser.js",
+              "app": "./src/components/App.js"
+          }
+        }
+      </script>
+</head>
+
+<body>
+
+    <div id="root">
+        <!-- Insert dom node -->
+    </div>
+    <script type="module">
+        //step 1: import factory method
+        import { createApp } from 'vue'
+        import  Application  from 'app'
+        //step 2: create app instance
+        // const app = createApp({
+        //     template: `<h1> Welcome to Vue Application</h1>`
+        // })
+        const app = createApp(Application)
+        //Step 3: Mount the component into root element
+        app.mount("#root")
+
+    </script>
+</body>
+
+</html>
+
+Plain javascript pattern is usefull where there is no build workflow,SFC is usefull and necessary in build tool work flow 
+
+		  SFC components are saved with fileName.vue
+		Plain javascript pattern files are saved with fileName.js
+
+.....................................................................................
+			    SFC 
+
+Components have three major segment:
+
+1.template 
+   collection of html elements and vue instructions
+2.javascript
+   collection of variables,methods
+3.style 
+   css style for a component
+
+
+In SFC Pattern, we isloate very clearly into three sections
+
+SFC files are saved "fileName.vue" extension
+
+<script>
+   ....All javascript code
+</script>
+<template>
+  ...template code
+</template>
+<style>
+ //style for this component
+</style>
+
+Single File Component Pattern -SFC
+App.vue
+
+<!-- Three segments -->
+<script>
+</script>
+<template>
+    <h1>Hello Vue!</h1>
+</template>
+<style>
+</style>
+
+	      "Going forward we focus only SFC pattern"
+
+Inside SFC , we can use either Options Api Based Style or Composition Api Based Style 
+
+....................................................................................
+			Commonality between both patterns
+ 			(Options api and Composition api)
+
+1.code segementation is same
+  <script></script>
+  <template></template>
+  <style></style>
+
+Options Api Pattern:
+......................
+In options Api Pattern, we return Options Object , which contains neccessary configurations.
+
+<script>
+ //return options object
+ export default {
+    //options
+
+ }
+<script>
+
+
+eg:
+
+<!-- Options Api Pattern -->
+<script>
+//you have to return Options Object
+export default {
+    props:['something'],
+    data() {
+        return {
+            name: 'Subramanian'
+        }
+    }
+}
+</script>
+<template>
+    <h1>Components Using Options Api Pattern</h1>
+</template>
+<style>
+
+</style>
+....................................................................................
+			  Composition Api Pattern
+
+In this pattern we define a component logic's using imported Api functions
+In this pattern we write code directly inside script.
+
+		          Composition Api Pattern
+				  |
+		----------------------------------------------------
+		|                                                  |
+	      with setup function                          with setup attribute	
+
+With Setup function:
+...................
+1.Looks like Options api pattern but code refactoring done.
+2.It looks like imperative style of compostion apis.
+
+<!-- Compsition pattern with setup function -->
+<script>
+export default {
+    setup() {
+        //all js initalization code will go here
+    }
+}
+</script>
+<template>
+</template>
+<style>
+
+</style>
+
+With setup attribute:
+....................
+
+1.vue compiler writes all boiler plate code for us.
+
+<!-- Compsition pattern with setup attribute -->
+<script setup>
+// you can write app logic directly : which looks like regular js code
+</script>
+<template>
+    <h1>Single File Component with Composition api with setup attribute</h1>
+</template>
+<style>
+
+</style>
+
+
+ 				Vue App
+				   |
+			---------------------------------------  
+			With Build tool                  without build tool
+				 |				|
+			SFC Component            	 Script based (refer above)
+				   |
+	----------------------------------------------------------------
+        |                                                             |
+        |                                                             |
+
+      Options Api                                              Composition Api
+	 |                                                          |
+   Vue 2 based apps                                           Vue 3 based apps
+							        												|	
+		  							|
+				----------------------------------------------------
+				|                                       |
+	      	with setup function                           with setup attribute	
+
+....................................................................................
+
+Component with Options api:
+...........................
+<!-- Options api pattern -->
+<script>
+// Options Object : we have to return always options Object
+export default {
+   //js logic goes
+}
+</script>
+<template>
+ <h1>Options Api Demo</h1>
+</template>
+<style>
+
+</style>
+
+Component with compostion api : with setup function
+<script>
+export default {
+    setup() {
+
+    }
+}
+</script>
+<template>
+    <h1>Composition api with setup function</h1>
+</template>
+<style>
+
+</style>
+
+Composition with setup attribute:
+<script setup>
+
+</script>
+<template>
+    <h1>Composition api with setup Attribute</h1>
+</template>
+<style>
+
+</style>
+...................................................................................
+				Composition
+..................................................................................
+Organization of Components in hierachical order(tree) pattern
+
+<div id="root">
+    <App>
+	<Hello></Hello>
+    </App>
+</div>
+
+eg:
+
+Component with "Options API"
+ 
+In this pattern, component must be registered inside script
+using components key
+
+src/components/greeter/Hello.vue
+<script>
+</script>
+<template>
+    <h2>Hello</h2>  
+</template>
+<style>
+</style>
+
+src/components/greeter/App.vue
+<script>
+import Hello from "./components/greeter/Hello.vue";
+
+export default {
+    components: { Hello }
+}
+</script>
+<template>
+    <div>
+        <h1>App</h1>
+        <Hello></Hello>
+    </div>
+</template>
+<style>
+
+</style>
+
+Component with "Composition  API with setup function"
+......................................................
+
+src/components/Message.vue
+<!-- composition  api pattern : using setup function -->
+<script>
+export default {
+    setup() {
+
+    }
+}
+</script>
+<template>
+    <h1>Hello</h1>
+</template>
+<style></style> 
+
+src/components/Hello.vue
+
+<script>
+import Message from './Message.vue';
+
+export default {
+    components: { Message },
+    setup() {
+
+    }
+}
+</script>
+<template>
+    <Message></Message>
+</template>
+<style></style>
+
+src/App.vue
+<script>
+// import components
+import Hello from './components/greeter/Hello.vue';
+
+export default {
+    components: {
+        Hello
+    },
+    setup(){
+        
+    }
+}
+</script>
+<template>
+    <Hello></Hello>
+</template>
+<style></style>
+
+Component with "Composition  API with setup attribute"
+......................................................
+
+src/components/Message.vue
+<script setup>
+</script>
+<template>
+    <h1>Hello</h1>
+</template>
+<style></style> 
+
+
+src/components/Hello.vue
+
+<!-- Composition api : using setup attribute -->
+<script setup>
+import Message from './Message.vue';
+</script>
+<template>
+    <Message></Message>
+</template>
+<style></style>
+
+
+src/App.vue
+<!-- Composition api pattern : using setup attribute-->
+<script setup>
+import Hello from './components/greeter/Hello.vue';
+</script>
+<template>
+    <Hello></Hello>
+</template>
+<style></style>
+.....................................................................................
+
+
+Assigment-1:
+............
+Create Layout Components
+
+1.header
+   |
+   Logo
+   SearchPanel
+   LoginPanel
+2.main
+   |
+   three sections
+    -Vue features
+3.Footer
+   |
+   Sponors
+   copyright
+
+You have to try
+
+1.Options api
+2.Compositions api with imperative (setup fun) and declarative Patterns (setup attr)
+		 
+............................&&&&&&&&&&..............................................
+			 Component Registeration -Creations
+.....................................................................................
+
+A Vue component needs to be "registered" so that Vue knows where to locate its implmeneation when it is encountered in a template.
+
+
+Two Types of Registeration:
+
+1.Global Registeration
+  Global Components
+2.Local Registeration
+  Local Components
+
+Global Components:
+  Components are created and  registered as part of the application object
+  Global Components can be accessed any where in the application without explicit   configuration
+
+Application object having lot of methods
+app.component()
+app.use()
+app.provide()
+etc...
+https://vuejs.org/api/application.html#app-component
+
+
+mport { createApp } from 'vue'
+
+const app = createApp({})
+
+// register an options object
+app.component('my-component', {
+  /* ... */
+})
+
+// retrieve a registered component
+const MyComponent = app.component('my-component')
+
+.....................................................................................
+eg:
+src/components/StatusBar.vue
+<script setup>
+</script>
+<template>
+    <h2>Status Bar!!</h2>
+</template>
+<style>
+</style>
+
+src/main.js
+
+import { createApp } from 'vue'
+import App from './App.vue'
+import StatusBar from './components/global/StatusBar.vue'
+import './assets/main.css'
+// console.log(App)
+
+const app = createApp(App)
+
+app.component('StatusBar', StatusBar)
+
+
+app.mount('#app')
+
+src/App.vue
+<script>
+import StatusBar from './components/global/StatusBar.vue';
+export default {
+    //components: { StatusBar }
+}
+
+</script>
+<template>
+    <StatusBar></StatusBar>
+</template>
+<style>
+</style>
+
+Without import also global components works:
+
+<!-- Compostion api pattern using setup attribute -->
+<script>
+import Hello from './components/greeter/Hello.vue'
+// import StatusBar from './components/global/StatusBar.vue'
+
+export default {
+    components: { Hello }
+}
+</script>
+<template>
+    <Hello></Hello>
+    <StatusBar></StatusBar>
+</template>
+
+
+
+Short cut inside main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+import StatusBar from './components/global/StatusBar.vue'
+import './assets/main.css'
+// console.log(App)
+// const app = createApp(App)
+// app.component('StatusBar', StatusBar)
+// app.mount('#app')
+
+createApp(App)
+    .component('StatusBar', StatusBar)
+    .mount('#app')
+
+Note:
+ Here incase the component is part of application object(Global Component), we need not register with components using {components:CompName}
+....................................................................................
+
+			 Local Components Registration
+................................................................................
+
+Components are registered when the child component is created
+
+SFC using composition pattern using setup attribute:
+
+Greeter.vue
+<script setup>
+  import ComponentA from './ComponentA.vue'
+</script>
+
+<template>
+  <ComponentA />
+</template>
+
+SFC using composition pattern using without setup attribute:
+
+Greeter.vue
+<script setup>
+  import ComponentA from './ComponentA.vue'
+
+export default {
+   components: { 
+         ComponentsA
+   }
+}
+</script>
+
+<template>
+  <ComponentA />
+</template>
+
+..................................................................................
+			Both local and global compoents
+...................................................................................
+<script>
+import StatusBar from './components/global/StatusBar.vue';
+import Hello from './components/greeter/Hello.vue';
+export default {
+    components: { Hello } //Local Component Registration,we tell to the vue engine that when ever you encounter this , create instance for this component.
+}
+</script>
+<template>
+    <StatusBar></StatusBar>
+    <Hello></Hello>
+</template>
+<style>
+</style>
+,,,,,,,,,,,,,,,,,,,,..................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+...................................................................................
+			Global Vs Local Component Registration
+.................................................................................
+=>Global registration prevents build systems from removing unused components (a.k.a "tree-shaking").
+=>If you globally register a component but end up not using it anywhere in your app, it will still be included in the final bundle.
+
+=>Global registration makes dependency relationships less explicit in large applications. 
+
+=>It makes it difficult to locate a child component's implementation from a parent component using it.
+
+=>This can affect long-term maintainability similar to using too many global variables.
+
+=>Global Components need to be imported inside any where
+
+<script>
+// import StatusBar from './components/global/StatusBar.vue';
+import Hello from './components/greeter/Hello.vue';
+export default {
+    components: { Hello } //Local Component Registration,we tell to the vue engine that when ever you encounter this , create instance for this component.
+}
+</script>
+<template>
+    <StatusBar></StatusBar>
+    <Hello></Hello>
+</template>
+<style>
+</style>
+.....................................................................................
+....................................................................................
+....................................................................................
+			 Component Naming Conventions
+.....................................................................................
+
+PascalCase names are valid JavaScript identifiers. This makes it easier to import and register components in JavaScript. It also helps IDEs with auto-completion.
+
+<PascalCase /> makes it more obvious that this is a Vue component instead of a native HTML element in templates. It also differentiates Vue components from custom elements (web components).
+
+
+This is the recommended style when working with SFC or string templates. However, as discussed in DOM Template Parsing Caveats, PascalCase tags are not usable in DOM templates.
+
+The Component names can be kebab-case /dash case eg
+   <app-root>
+   <hello-world>
+   <greeter>
+
+	Vue supports both cases , but highly recommened is Pascal Case
+
+App.vue
+
+<script setup>
+import Hello from './components/greeter/Hello.vue';
+</script>
+<template>
+    <!-- Pascal case -->
+    <StatusBar></StatusBar>
+    <Hello></Hello>
+    <!-- dash-case/Kebab-case -->
+    <status-bar></status-bar>
+    <hello></hello>
+</template>
+<style></style>
+.....................................................................................
+				Vue dev tool
+.....................................................................................
+
+https://devtools.vuejs.org/guide/installation.html
+.....................................................................................
+.....................................................................................
+			    Templates
+...................................................................................
+Template is the representation of View
+View is Runtime representation
+
+Template can be static or dynamic 
+
+Static templates are having pure html code
+Dynamic templates are having html code + Vue instructions
+Vue instructions are special symbols
+  
+Template  = html + vue instructions (data,events,props)
+
+Data Binding:
+.............
+  Passing data from the Component to View and View to Component
+
+Types of Data bidning:
+
+1.interpolation
+2.property /props binding
+3.attribute binding
+4.event binding
+5.Two way data binding
+6.class and style binding
+.....................................................................................
+.....................................................................................
+			  MVC  Architecture
+....................................................................................
+
+In order to build user interface we have architectures
+
+1.MVC 
+  It is the most legacy arch but still more popular arch, used in server side,client   side app developments
+
+2.Flex 
+   It is discovered by face book, in order to replace MVC , primarily used in React..
+
+Vue js is MVC Based  and Flex mixed arch -hybrid arch..
+
+M - Model - State - Data
+V - View  - User interface
+C - Controller - Having data and biz logic
+
+Vue and MVC:
+<script>
+   // M + C ->logic
+</script>
+<template> 
+   View logic 
+</template>
+<style>
+</style>
+
+ Component = {Model+Controller(Script) ,View(template,style)}
+
+...................................................................................
+				Interpolation
+....................................................................................
+
+Transfering data(state) from (controlller) to View.
+
+State:
+  State Can be represented in two ways
+
+1.primitives - numbers,strings,boolean
+  let name='subramanian'
+  let salary=100
+  let isValid=true
+2.objects and collections -  literal object,arrays
+  
+  let profile = {
+    id:1,
+    name:'Arun'
+  }
+  let profiles = [{
+    id:1,
+    name:'Arun'
+  },{
+    id:2,
+    name:'Bala'
+  }]
+SFC:
+ 1.Using Options api
+ 2.Using Composition api
+    -with setup fun
+    -with setup attribute
+
+1.Using Options Api
+    Encapsulate options inside literal object
+
+let options = {
+  data:?
+  props:?
+  methods:?
+}
+
+State Declaration and Options Api:
+.................................
+
+Syntax:
+<script>
+export default {
+   data:function(){
+	return {
+           data:....
+	} //state object 
+   }
+}
+</script>
+
+data is function which encapulsates state(Model)
+data function must return object which encapuslate "state/model".
+
+Syntax: es 6 way of declaration function
+<script>
+export default {
+   data(){
+	return {
+           data:....
+	} //state object 
+   }
+}
+</script>
+
+
+Eg:
+<!-- State Declaration : Using Options api -->
+<script>
+export default {
+    data() {
+        return {
+            name: 'Subramanian' //state
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>State Declaration and InterPolation Using Options Api</h1>
+
+    </div>
+</template>
+<style></style>
+
+How to show the state inside view (template)?
+
+Via Data binding - interpolation {{variable}}
+
+
+Eg:
+State with Options Api:
+<!-- State Declaration : Using Options api -->
+<script>
+export default {
+    data() {
+        return {
+            firstName: 'Subramanian',
+            lastName: 'Murugan',
+            address: {
+                city: 'Coimbatore',
+                state: 'Tamil Nadu'
+            },
+            points: 120,
+            status: true
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>State Declaration and InterPolation Using Options Api</h1>
+        <div>
+            <h2>Name {{ firstName }} {{ lastName }}</h2>
+            <h2>Address {{ address.city }} {{ address.state }}</h2>
+            <h3>Points  {{ points }}</h3>
+            <h3>Status {{ status ? "Available" : "Not Available" }}</h3>
+        </div>
+    </div>
+</template>
+<style></style>
+...................................................................................
+			   Composition Api - Using Setup function
+
+The component logic must be encapsulated inside a function called "setup"
+
+export default {
+
+ setup(){
+
+   return {} //must return state
+ }
+
+}
+
+eg:
+<!-- State Declaration : Using Compostion api-setup function -->
+<script>
+export default {
+    setup() {
+        const firstName = 'Subramanian'
+        const lastName = 'Murugan'
+        const address = {
+            city: 'Coimbatore',
+            state: 'Tamil Nadu'
+        }
+        const points = 120
+        const status = true
+
+        //return object 
+        return {
+            firstName,
+            lastName,
+            address,
+            points,
+            status
+        }
+
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>State Declaration and InterPolation Using Options Api</h1>
+        <div>
+            <h2>Name {{ firstName }} {{ lastName }}</h2>
+            <h2>Address {{ address.city }} {{ address.state }}</h2>
+            <h3>Points {{ points }}</h3>
+            <h3>Status {{ status ? "Available" : "Not Available" }}</h3>
+        </div>
+    </div>
+</template>
+<style></style>
+
+...................................................................................
+			   Composition Api - Using Setup attribute
+
+<!-- State Declaration : Using Compostion api-setup attribute -->
+<script setup>
+const firstName = 'Subramanian'
+const lastName = 'Murugan'
+const address = {
+    city: 'Coimbatore',
+    state: 'Tamil Nadu'
+}
+const points = 120
+const status = true
+</script>
+<template>
+    <div>
+        <h1>State Declaration and InterPolation Using Options Api</h1>
+        <div>
+            <h2>Name {{ firstName }} {{ lastName }}</h2>
+            <h2>Address {{ address.city }} {{ address.state }}</h2>
+            <h3>Points {{ points }}</h3>
+            <h3>Status {{ status ? "Available" : "Not Available" }}</h3>
+        </div>
+    </div>
+</template>
+<style></style>
+.....................................................................................
+				Directives
+....................................................................................
+
+What is directive?
+  Directive is object which helps to create custom elements and attributes.
+  Directives enchances existing html elements - We extend the functionality of HTML   elements.
+  We are going to add new behaviour to the HTML elements.
+
+Vue is highly modular framework, code Resue is Main Objective.
+
+
+Code Resue Patterns:
+...................
+1.Components
+2.Composables(Hooks)
+3.Directives
+
+
+Components are main building blocks.
+Composable are focused on "Resuing stateful logic" - Data isloation.
+Directives are mainly intented for resuing logic that involes low level DOM Access on Plain Elements -DOM Element features.
+
+HTML elements Types:
+
+1.Built in element and attributes
+2.Custom elements and attributes
+
+<h1>Hello</h1> -  built in element.
+
+HTML Compiler Work flow:
+.......................
+
+
+<h1>Hello</h1> -----Compiler verfies this element is built in or not
+				|
+		   --------------------------------
+		   |                              |
+                 Yes                             No
+		  |                              |
+Browser parses the                    Browser throws exception                       called                                "UnknownElement"
+element and convert                   which is converted into plain ascii node
+it , render accordingly
+
+
+ <app-root>  -----Compiler verfies this element is built in or not
+				|
+		   --------------------------------
+		   |                              |
+                 Yes                             No
+		  |                              |
+Browser parses the                    Browser throws exception                       called                                "UnknownElement"
+element and convert                   which is converted into plain ascii node
+it , render accordingly
+
+
+<app-drawer> - it is custom element, generally browser does not under stand.
+
+In 2007, W3c introduced new idea that developers can add their own tags/elements(custom elements and custom attributes)
+   HTML 5 Specification
+
+built in element logic is already written, so that browser easily understands that.
+
+What about custom element, how to teach browser to understand custom elements?
+    
+  "Through Javascript"
+
+<app-drawer> ---|JS Code--->Runs ---renders in the browser....
+
+eg:
+<script setup>
+import AppDrawer from './components/drawer/AppDrawer.vue'
+</script>
+<template>
+<h1>Drawer App</h1>
+<!-- Custom element -->
+<app-drawer></app-drawer>
+</template>
+<style>
+
+</style>
+
+src/componnets/drawer/AppDrawer.vue
+<script setup>
+</script>
+<template>
+    <p>Drawer Element</p>
+</template>
+<style>
+</style>
+
+ 		"Every Component is a Custom element only"
+
+.....................................................................................
+			Custom Attributes
+.....................................................................................
+
+1.Built in element Attributes
+
+ <img src="" alt="">
+       |      |
+   Attributes - Built in attributes
+
+Browser knows how to put logic to src and alt.
+
+2.Custom attributes on existing html elements
+
+<img customAttribute />
+        | 
+     custom attribute
+How to teach browser to parse custom Attributes 
+  "Through Javascript"
+
+eg: Vue rendered page:
+
+<div id="app" data-v-app="">
+<h1>Drawer App</h1>
+ <!-- Custom element --><p>Drawer Element</p>
+</div>
+.....................................................................................
+	Vue.js Helps to add Custom attributes on existing elements via "Directives" -				Attribute Directives
+.....................................................................................
+Vue js attribute directive syntax:
+
+v-directiveName
+
+Built in Directives:
+...................
+v-text
+v-html
+v-show
+v-if
+v-else
+v-else-if
+v-for
+v-on
+v-bind
+v-model
+v-slot
+v-pre
+v-once
+v-memo
+v-cloak
+
+Special Attributes
+key
+ref
+is
+.....................................................................................
+			    v-html and v-text
+...................................................................................
+
+v-html :
+ inserts data into html element as "HTML"  - innerHTML 
+{{}} 
+  inserts data into html element as "Plain Text"
+
+				v-text
+
+Update the element's text content. - innerText
+
+<script setup>
+//variable
+const name = 'Subramanian'
+</script>
+<template>
+    <h1>Interpolation using mustace notation</h1>
+    <h2>Name {{name}}</h2>
+    <h1>Interpolation using using Directives-text </h1>
+    <h2 v-text="`name ${name}`"></h2>
+    <h1>Interpolation using using Directives-html </h1>
+    <h2 v-html="`name ${name}`"></h2>
+</template>
+<style>
+
+</style>
+...................................................................................
+			 v-bind
+...................................................................................
+
+V-binds html attributes values or components values(properties) dynamically.
+
+Binding: Attach value to the attribute
+
+Static Binding
+  <img src="logo.png"/>
+	|         |
+       attribute  attributevalue
+here value of src cant be changed once the ui rendered
+
+<script setup>
+const imageUrl = "/src/assets/logo.svg"
+const isEnabled = true
+const isHidden = false
+</script>
+<template>
+    <div>
+        <h1>Bind Directives</h1>
+        <div>
+            <h1>Static Binding</h1>
+            <img src="./assets/logo.svg" height="100" width="100" />
+        </div>
+        <div>
+            <h1>Dynamic Binding with v-bind</h1>
+            <img v-bind:src="imageUrl" height="100" width="100"/>
+        </div>
+        <div>
+            <h1>Dynamic Binding with v-bind with short cut</h1>
+            <img :src="imageUrl" height="100" width="100"/>
+        </div>
+        <div>
+            <h1>Dynamic Binding with v-bind Button enabled</h1>
+            <button :disabled="isEnabled">Click</button>
+        </div>
+        <div>
+            <h1>Dynamic Binding with v-bind Article hidden</h1>
+            <article :hidden="isHidden">
+                <p>This is vue article</p>
+            </article>
+        </div>
+    </div>
+</template>
+<style></style>
+.....................................................................................
+				Props
+.....................................................................................
+.....................................................................................
+			Component Driven Design principles
+.....................................................................................
+
+Role of Components / Responsibility of Component:
+..................................................
+
+Component having state,bizlogic,ui
+
+As per component design design principles , we need to apply modularity concept.
+  Break the component based on two aspects
+
+1.Having data and biz logic
+    -Parent Component /Container component
+2.Having UI logic
+    -Child Component/Presentational Component
+
+
+Data(State) Sharing Patterns/ Data(State) Representation Patterns:
+....................................................
+
+1.Props Pattern
+  The data is shared from the Parent Component to Child Component.
+2.State Pattern
+  The data is reprensented with in component and mutate it.   
+
+From Parent Component template:
+
+   <ProductDetails title="Product Details" ></ProductDetails>
+                     |            |
+                  PropertyName   Property value
+   <div id="">
+	 |
+       attribute
+
+How to structure a Large scale vue.js app
+
+Default strcture
+
+src
+  |
+  components
+    |
+    User 
+    Product
+    Comments
+    Payment
+
+Standard Structure of apps would be domain model
+
+src
+  |
+  components
+    |
+    User 
+      Userlist.vue
+      UserDetails.vue
+      User.vue
+   Product	
+      ProductList.vue
+      ProductDetails.vue
+      Product.vue
+   stores
+   layouts
+   plugins
+   directives
+   helpers/utils
+....................................................................................
+			 Props - Pattern implementation
+.....................................................................................
+
+How to pass data from parent component to child component?
+
+since we have many coding pattern (options api, composition api).
+
+Props with Options api:
+.......................
+
+src/components/ProductMaster.vue
+<script>
+import ProductDetails from './ProductDetails.vue'
+export default {
+    components: {
+        ProductDetails
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>Product Master</h1>
+        <!-- title is prop -->
+        <ProductDetails title="Product Page" />
+    </div>
+</template>
+
+
+src/components/ProductDetails.vue
+<script>
+export default {
+    props: ['title']
+}
+</script>
+<template>
+    <div>
+        <h1>{{title}}</h1>
+    </div>
+</template>
+
+src/App.vue
+<script>
+import ProductMaster from './components/products/ProductMaster.vue'
+
+export default {
+    components: { ProductMaster }
+}
+</script>
+<template>
+    <div>
+        <h1>App</h1>
+        <ProductMaster></ProductMaster>
+    </div>
+</template>
+
+How to pass data to component as prop:
+
+
+src/components/ProductMaster.vue
+<script>
+import ProductDetails from './ProductDetails.vue'
+export default {
+    components: {
+        ProductDetails
+    },
+    data() {
+        return {
+            product: {
+                id: 1,
+                name: 'Phone',
+                qty: 100,
+                price: 1000,
+                inStock: 'true'
+            }
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>Product Master</h1>
+        <!-- title and product  are prop : title is static prop product is dynamic prop -->
+        <ProductDetails title="Product Page-1" :product="product" />
+        <ProductDetails title="Product Page-2" :product="product" />
+        <ProductDetails title="Product Page-3" :product="product" />
+        <ProductDetails title="Product Page-4" :product="product" />
+        <ProductDetails title="Product Page-5" :product="product" />
+
+    </div>
+</template>
+
+
+src/components/ProductDetails.vue
+<script>
+export default {
+    props: ['title','product']
+}
+</script>
+<template>
+    <div>
+        <h1>{{title}}</h1>
+        <h2>Id {{product.id}}</h2>
+        <h2>Name {{product.name}}</h2>
+        <h2>Price {{product.price}}</h2>
+        <h2>Qty {{product.qty}}</h2>
+        <h2>Stock {{product.inStock ? "Available" : "Not Available"}}</h2>
+
+
+    </div>
+</template>
+
+
+src/App.vue
+<script>
+import ProductMaster from './components/products/ProductMaster.vue'
+
+export default {
+    components: { ProductMaster }
+}
+</script>
+<template>
+    <div>
+        <h1>App</h1>
+        <ProductMaster></ProductMaster>
+    </div>
+</template>
+....................................................................................
+			 Props Composition api : Using setup function
+.....................................................................................
+
+
+src/components/products/ProductDetails.vue
+
+<!-- composition api with setup function -->
+<script>
+export default {
+    props: ['title', 'product'],
+    setup() {
+
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>{{ title }}</h1>
+        <h2>Id {{ product.id }}</h2>
+        <h2>Name {{ product.name }}</h2>
+        <h2>Price {{ product.price }}</h2>
+        <h2>Qty {{ product.qty }}</h2>
+        <h2>Stock {{ product.inStock ? "Available" : "Not Available" }}</h2>
+    </div>
+</template>
+
+src/components/products/ProductMaster.vue
+
+<!-- Props with composition api with setup function -->
+<script>
+import ProductDetails from './ProductDetails.vue'
+
+export default {
+    components: {
+        ProductDetails
+    },
+    setup() {
+        
+        return {
+            product: {
+                id: 1,
+                name: 'Phone',
+                qty: 100,
+                price: 1000,
+                inStock: 'true'
+            }
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>Product Master</h1>
+        <!-- title and product  are prop : title is static prop product is dynamic prop -->
+        <ProductDetails title="Product Page-1" :product="product" />
+        <ProductDetails title="Product Page-2" :product="product" />
+        <ProductDetails title="Product Page-3" :product="product" />
+        <ProductDetails title="Product Page-4" :product="product" />
+        <ProductDetails title="Product Page-5" :product="product" />
+
+    </div>
+</template>
+
+
+src/App.vue
+<script>
+import ProductMaster from './components/products/ProductMaster.vue'
+
+export default {
+    components: { ProductMaster },
+    setup() {
+
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>App</h1>
+        <ProductMaster></ProductMaster>
+    </div>
+</template>
+////////////////////////////////////////////////////////////////////////////////////
+....................................................................................
+			 Props Composition api : Using setup attribute
+.....................................................................................
+
+
+src/App.vue
+<!-- Composition api with setup attribute -->
+<script setup>
+import ProductMaster from './components/products/ProductMaster.vue'
+</script>
+<template>
+    <div>
+        <h1>App</h1>
+        <ProductMaster></ProductMaster>
+    </div>
+</template>
+
+
+src/components/products/ProductMaster.vue
+<script setup>
+import ProductDetails from './ProductDetails.vue'
+const product = {
+    id: 1,
+    name: 'Phone',
+    qty: 100,
+    price: 1000,
+    inStock: 'true'
+}
+
+</script>
+<template>
+    <div>
+        <h1>Product Master</h1>
+        <!-- title and product  are prop : title is static prop product is dynamic prop -->
+        <ProductDetails title="Product Page-1" :product="product" />
+        <ProductDetails title="Product Page-2" :product="product" />
+        <ProductDetails title="Product Page-3" :product="product" />
+        <ProductDetails title="Product Page-4" :product="product" />
+        <ProductDetails title="Product Page-5" :product="product" />
+
+    </div>
+</template>
+
+src/components/products/ProductDetails.vue
+
+In setup attribute, vue provides global api called "defineProps" method.
+
+
+<script setup>
+const props = defineProps(['title', 'product'])
+console.log(props)
+</script>
+<template>
+    <div>
+        <h1>{{ props.title }}</h1>
+        <h2>Id {{ props.product.id }}</h2>
+        <h2>Name {{ product.name }}</h2>
+        <h2>Price {{ product.price }}</h2>
+        <h2>Qty {{ product.qty }}</h2>
+        <h2>Stock {{ product.inStock ? "Available" : "Not Available" }}</h2>
+    </div>
+</template>
+....................................................................................
+		How to access Props inside script(Composition api)
+..................................................................................
+
+setup function:
+ props are passed as arg to the setup function.
+<script>
+export default {
+    props: ['title', 'product'],
+    setup(props) {
+        console.log(props.product)
+    }
+}
+</script> 
+<template>
+    <div>
+        <h1>{{ title }}</h1>
+        <h2>Id {{ product.id }}</h2>
+        <h2>Name {{ product.name }}</h2>
+        <h2>Price {{ product.price }}</h2>
+        <h2>Qty {{ product.qty }}</h2>
+        <h2>Stock {{ product.inStock ? "Available" : "Not Available" }}</h2>
+    </div>
+</template>
+
+Inside Setup attribute:
+
+<script setup>
+const props = defineProps(['title', 'product'])
+console.log(props.title,props.product)
+</script>
+<template>
+    <div>
+        <h1>{{ title }}</h1>
+        <h2>Id {{ product.id }}</h2>
+        <h2>Name {{ product.name }}</h2>
+        <h2>Price {{ product.price }}</h2>
+        <h2>Qty {{ product.qty }}</h2>
+        <h2>Stock {{ product.inStock ? "Available" : "Not Available" }}</h2>
+    </div>
+</template>
+...................................................................................
+			 Property Validation
+...................................................................................
+Some times i want to enforce the property data type validation, which is only for runtime vertification.
+
+eg:
+ i have property called age
+ i need to define rule for age that age must be number,it should not be string.
+
+defineProps Syntax:
+1.simple Syntax
+
+  defineProps(['propName','propName'])
+
+2.Complex Syntax : prop validation rule, default value 
+
+  defineProps({
+     age:Number,  
+     id: [Number,String] // can be string or can be number
+     name: {
+      type:String
+      required:true,
+      default:'name'
+     },
+     address: {
+	type:Object,
+        default(rawProps){
+	    return {
+		city:'mycity'
+            }
+        }
+     },
+    status: {
+	validator(value){
+	  return ['OK','NotOk','Success','Failure'].includes(value)
+       }
+    }
+ })
+
+Runtime Types:
+1.String
+2.Number
+3.Boolean
+4.Array
+5.Object
+6.Date
+7.Function
+8.Symbol
+
+eg:
+
+src/App.vue
+<script setup>
+import User from './components/profile/User.vue';
+// const name = "Subramanian" 
+const name = 122323
+const disabled = true
+</script>
+<template>
+    <User :name="name" :disabled="disabled"></User>
+    <!-- Boolean :Boolean has special casting rules to mimic the behavior of the native boolean elements -->
+    <User disabled></User>
+    <User></User>
+
+</template>
+<style></style>
+
+src/components/profile/User.vue
+<script setup>
+const props = defineProps({
+    name: {
+        type: String,
+        default: 'Name is Missing'
+    },
+    disabled: {
+        type:Boolean,
+        default:false 
+    }
+
+})
+</script>
+<template>
+    <div>
+        <h1>User Page</h1>
+        <h2>Name {{ props.name }} </h2>
+        <h3>Status {{props.disabled}}</h3>
+    </div>
+</template>
+<style></style>
+.....................................................................................
+			One way data flow Model
+.....................................................................................
+All props forms a one way data flow model, where child component cant update the properties
+
+						"Props are read only"
+
+<script setup>
+//const props = defineProps(['title'])
+const props = defineProps({
+    title: {
+        type:String,
+        default: 'Default Props'
+    }
+})
+//update property - props are read only
+props.title = "something"
+</script>
+<template>
+    <div>
+        <h1>{{props.title}}</h1>
+    </div>
+</template>
+<style>
+
+</style>
+
+reactivity.esm-bundler.js:4 [Vue warn] Set operation on key "title" failed: target is readonly. Proxy
+warn @ reactivity.esm-bundler.js:4
+reactivity.esm-bundler.js:4 [Vue warn] Set operation on key "title" failed: target is readonly. Proxy
+warn @ reactivity.esm-bundler.js:4
+runtime-core.esm-bundler.js:38 [Vue warn]: Invalid prop: type check failed for prop "title". Expected String with value "100", got Number with value 100. 
+  at <ProductDetails title=100 > 
+  at <ProductMaster/>
+
+....................................................................................
+			   Event Handling
+....................................................................................
+Event handling is one of the most popular concept in javascript as part of DOM programming.
+Event handling helps to interact with user.
+Events  are signals triggered by user or system, send to os system, the software or hardware reacts according to the event.
+
+Events are classified into two category
+
+1.Hardware events
+   Triggered by user or system, interacts with hardware devices   
+eg:
+  Mouse events
+    onclick,ondblclick,onmouseenter...
+  https://www.w3schools.com/jsref/obj_mouseevent.asp
+  Keyboard events
+   onkeypress,onkeydown
+  https://www.w3schools.com/jsref/event_onkeypress.asp
+  Touch events
+  ontouchstart,ontouchend
+  https://www.w3schools.com/jsref/obj_touchevent.asp
+
+2.Application events
+   attached with objects called dom objects
+  onload,oncomplete
+
+...................................................................................
+		    How event handling works
+
+Event handling has been designed based on the design pattern called "pub-sub"/observer design pattern.
+
+There are two actors:
+1.Producer
+   The producer is something who sends signals(events - name of the event and data assoicated) to the listener
+2.Listener
+  The Listener is someone who waits/listens for event.
+  Once the event is given who reacts/respond
+
+In js :
+ Listener is function.
+
+//event is just reference to the Event Object having information about event, and data
+function listener(event){
+     event.target.value
+}
+event object is a bridge between producer and listener
+
+In javascript , events are given by language itself.
+
+events are started with "on+eventName" - 
+ onclick="listener"
+
+addEventListener('click',listener)
+listeners are plain js functions with event object reference arg
+
+Frameworks like vue,react,angular who adds their own abstractions.
+
+We can attach event on any dom element which could be application or hardware
+
+
+Vue Js and event handling:
+..........................
+
+Vue attaches events with any element with help of directive
+                          "v-on"
+
+Syntax:
+1. v-on:NameOftheEvent="listener" -  v-on:click="update"
+2. @click="listener" - @click="update"
+
+Event Hanlding Options Api:
+...........................
+
+<!-- Event handling in options Api -->
+
+<script>
+export default {
+    data() {
+        return {
+            counter: 0
+        }
+    },
+    methods: {
+        //listeners will go
+        onIncrement(evt) {
+            console.log('onIncrement')
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter }}</h1>
+        <button v-on:click="onIncrement">Click</button>
+        <button @:click="onIncrement">Click</button>
+
+    </div>
+</template>
+<style></style>
+
+Event listners in composition pattern: setup function.
+<script>
+export default {
+    setup() {
+        const counter = 0;
+        //listener 
+        const onIncrement = () => {
+            console.log('onIncrement')
+        }
+        //you must return object , inside you should encaspulate listeners
+        return {
+            counter,
+            onIncrement
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter }}</h1>
+        <button v-on:click="onIncrement">Click</button>
+        <button @:click="onIncrement">Click</button>
+
+    </div>
+</template>
+<style></style>
+
+<!-- Setup attribute -->
+<script setup>
+const counter = 0;
+//listener 
+const onIncrement = () => {
+    console.log('onIncrement')
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter }}</h1>
+        <button v-on:click="onIncrement">Click</button>
+        <button @:click="onIncrement">Click</button>
+
+    </div>
+</template>
+<style></style>
+...................................................................................
+		 How to attach more than one listener on single DOM Element
+...................................................................................
+
+<dom v-on:eventName="listener" v-on:eventName="listener">
+<dom v-on="{mouseenter:onMouseEnter,mouseleave:onMouseLeave}">
+
+<script setup>
+const onMouseEnter = (evt) => {
+    console.log('onMouseEnter')
+}
+const onMouseLeave = (evt) => {
+    console.log('onMouseLeave')
+}
+</script>
+<template>
+    <div>
+        <div v-on="{ mouseenter:onMouseEnter,mouseleave:onMouseLeave}">
+            Touch
+        </div>
+    </div>
+</template>
+<style></style>
+..................................................................................
+			  How to pass data to the event listener
+..................................................................................
+const getData = (data,event) => {
+    console.log(data,event)
+}
+ <button @click="getData('hello',$event)">Pass Data</button>
+
+when we pass data to the listener, vue cant  pass event implicitly, we have to pass event object explicitly via "$event" which is global event object provided by vue.
+....................................................................................
+			  State - Reactive State
+....................................................................................
+
+State means data
+How to change or update State?
+
+React uses the concept called "pure functions" to change the state
+Angular uses the concept called "Two way data" binding to change the state
+Vue uses the concept called "Reactive state, /Reactivity" to change the state.
+
+Component state consists of reactive javascript object , when you modify them, the view updates automatically.
+
+Through event listener we modify the state of object(reactive),Ui gets lastest value.
+
+There are various different programming patterns to change state in options and composition api.
+
+Options Api:
+
+ data function returns object which is by default "Reactive" , when ever you change that properties of the object, ui bindings gets updated automatically.
+
+data() {
+ //reactive state 
+ return {
+    count:0
+ }
+}
+How to mutate?
+methods: {
+  onIncrement(){
+    //mutate the reactive variable.
+    this.count++ // mutation
+  }
+
+}
+
+eg:
+<script>
+export default {
+    data() {
+        return {
+            counter: 0
+        }
+    },
+    methods: {
+        onIncrement() {
+            //access state and mutate
+            this.counter++
+        },
+        onDecrement() {
+            //access state and mutate
+            this.counter--
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter }}</h1>
+        <button @click="onIncrement">+</button>
+        <button @click="onDecrement">-</button>
+
+    </div>
+</template>
+
+
+Composition Api:Setup function
+
+<script>
+    export default {
+        setup() {
+            let counter = 0
+            const onIncrement = () => {
+                console.log(counter)
+                counter++
+            }
+            const onDecrement = () => {
+
+            }
+            return {
+                counter, onIncrement, onDecrement
+            }
+        }
+    }
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter }}</h1>
+        <button @click="onIncrement">+</button>
+        <button @click="onDecrement">-</button>
+
+    </div>
+</template>
+
+After running this code, 
+	Here we are trying to mutate/update the "count" state variable, there is update happening but it does not trigger "view update /view rerender"
+
+The reason because the variables are declared within setup function is not reactive variables by default rather which is local variables. so that vue engine will not trigger re render.
+
+We have to convert that local variable into "reactive" variable.
+
+How to declare reactive state or how to attach reactivity feature?
+
+Compostion Api reactive methods:
+................................
+ref()
+computed()
+reactive()
+readonly()
+watchEffect()
+watchPostEffect()
+watchSyncEffect()
+watch()
+etc...
+
+ref():
+ It is function which returns Object, not value
+
+function ref<T>(value: T): Ref<UnwrapRef<T>>
+
+interface Ref<T> {
+  value: T
+}
+
+Composition Api: with setup function:
+
+<script>
+import { ref } from 'vue'
+
+export default {
+    setup() {
+        let counter = ref(0)
+        const onIncrement = () => {
+            console.log(counter.value)
+            counter.value ++
+        }
+        const onDecrement = () => {
+            counter.value --
+        }
+        return {
+            counter, onIncrement, onDecrement
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter }}</h1>
+        <button @click="onIncrement">+</button>
+        <button @click="onDecrement">-</button>
+
+    </div>
+</template>
+.....................................................................................
+
+State Mutation with Setup attribute:
+<script setup>
+import { ref } from 'vue'
+let counter = ref(0)
+const onIncrement = () => {
+    console.log(counter.value)
+    counter.value++
+}
+const onDecrement = () => {
+    counter.value--
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter }}</h1>
+        <button @click="onIncrement">+</button>
+        <button @click="onDecrement">-</button>
+
+    </div>
+</template>
+...................................................................................
+ Passing values to Listener and based on that value we can mutate UI.
+
+<script setup>
+import { ref } from 'vue'
+let counter = ref(0)
+const onIncrement = () => {
+    console.log(counter.value)
+    counter.value++
+}
+const onDecrement = () => {
+    counter.value--
+}
+const onIncrementBy = (payload, event) => {
+    counter.value += payload
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter }}</h1>
+        <button @click="onIncrement">+</button>
+        <button @click="onDecrement">-</button>
+        <button @click="onIncrementBy(5, $event)">IncrementBy</button>
+
+    </div>
+</template>
+....................................................................................
+			InLine Event listener
+....................................................................................
+
+We dont need a separate listener function inside script, we can declare as part of the event binding.
+<script setup>
+import { ref } from 'vue'
+let counter = ref(0)
+const onIncrementBy = (payload, event) => {
+    counter.value += payload
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter }}</h1>
+        <button @click="counter++">+</button>
+        <button @click="counter--">-</button>
+        <button @click="onIncrementBy(5, $event)">IncrementBy</button>
+    </div>
+</template>
+.....................................................................................
+			Multiple Reactive Variables
+.....................................................................................
+<script setup>
+import { ref } from 'vue'
+let like = ref(0)
+let dislike = ref(100)
+
+</script>
+<template>
+    <div>
+        <h1>Like {{ like }} Dislike {{ dislike }}</h1>
+        <button @click="like++">Like</button>
+        <button @click="dislike++">Dislike</button>
+    </div>
+</template>
+.....................................................................................
+Case Study:
+  You have to create User compoent having user details
+  1.basic user info - like id,firstName,lastName
+  2.address - street,city,state,country,zipcode
+  3.Logo - img
+  4.location - lat, lng
+
+ User
+  |
+  Address
+  Logo
+  Location
+
+Pass props from the parent compoent to child
+
+
+
+
+
+
+
+
+
+
