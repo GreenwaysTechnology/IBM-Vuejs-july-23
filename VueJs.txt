@@ -2637,7 +2637,7 @@ const props = defineProps({
 .....................................................................................
 All props forms a one way data flow model, where child component cant update the properties
 
-						"Props are read only"
+			"Props are read only"
 
 <script setup>
 //const props = defineProps(['title'])
@@ -3095,6 +3095,250 @@ Case Study:
   Location
 
 Pass props from the parent compoent to child
+.....................................................................................					....................................................................................
+			   Reactivity
+....................................................................................
+
+What is Reactivity?
+  Reactivity is one of the core vue js concept.
+Component state are "reactive javascript objects"
+
+The word reactivity means "changing" the state(object),whenever changes happen it publishes some events, based on events,reactions happens.
+
+Programming work flow in general
+
+int x =10;
+int y =20;
+
+int result = x + y
+
+when you compute this code, the runtime will execute instructions top-down pattern.
+if there is change in variable (like x or y), will not update result variable
+ -Sequential programming model.
+
+What if i want to update the "result" variable value automatically when ever x or y changes.
+
+eg:
+Excel spreed sheet is one of the best eg for reactivitity programming
+
+eg;
+
+let A1=1
+let A2=2
+let A3 =A1+A2
+console.log(A3) => 3
+
+A2=4
+console.log(A3) => 7
+
+Here when you mutate A1 or A2, does not change automatically.
+
+We can wrap this code inside function
+
+ let A3
+ function update(){
+   A3 = A1 + A2
+ }
+ console.log(A3)
+ if changes are dedecuted in A1 and A2 ->We need to rerun(update()
+ update()
+ console.log(A3)
+
+in order get fresh value, we have to re-run the code that updates A3
+
+Pointers:
+
+1.There should be some update function, which produces a "side effect /effect".
+  if any function which changes the state of the program called side effect.
+
+2.Here ,A1 and A2 are considered dependencies of the side effect, because which helps makes side effects.
+  According to dependencies, this effect is said to be "subscriber"
+
+When ever "A1 and A2" changed, we need to invoke "update" function,which cause side effects.
+
+It looks like event driven programming (Pub-Sub Pattern /Observerable and Observer) 
+
+ function whenDepChange(update){
+     update()
+ }
+
+ let A3
+ function update(){
+   A3 = A1 + A2
+ }
+
+ whenDepChange(function(){
+     A3 = A1 + A2
+ })
+ whenDepChange(update)
+
+Role of whenDepchange function:
+................................
+
+1.Tracking the dependencies,
+    By evaulating the expression A1 and A2 ,Whether any one of them is read or not.
+
+Vue Internal Reactivity WorkFlow:
+
+Tracker--->triggers--whenDepChange--->runs update function---returns modified state
+	
+...................................................................................
+			  Vue js and Reactivity
+
+Vue js uses "Reactivity subsystem" in order to track all state variables, when ever which changes happen, it inform the vue engine for re render process..
+
+In large scale we cant really track the reading and writing of local variables like the above example.
+There is no any mechanism of doing that in "plain javascript". Instead of local variables what we can do , we can intercept the reading and writing of object propeties.
+
+There are two implementations
+1.Intercepting property access in javascript via getters and setters.
+2.ES 6 has concept called "Proxies", through which we can track changes object 
+properties.
+
+In vue 2, setters and getters are used
+In vue 3 ,Proxies are used.
+
+Pseudo-code of Reactive apis in Vue js
+
+function ref(value){
+ const refObject={
+    get value(){
+	track(refObject,'value')
+        return value
+    }
+    set value(newValue){
+	value=newValue
+	trigger(refObject,'value')
+    }
+
+ }
+ return refObject
+}
+
+const proxy = ref(0)
+proxy.value
+....................................................................................
+			 ref with literal object
+....................................................................................
+
+<script setup>
+import { ref } from 'vue'
+const counter = ref({ count: 0 })
+const onIncrement = () => {
+    counter.value.count++
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter.count }}</h1>
+        <button @click="onIncrement">+</button>
+    </div>
+</template>
+<style></style>
+..................................................................................
+		      reactive api
+
+There is another way to declare reactive state, with reactive api.
+Unlike a ref which wraps the inner value in special object, reactive makes an object itself reactive
+
+<script setup>
+import { reactive, ref } from 'vue'
+
+const state = { count: 0 }
+const counter = reactive(state)
+
+console.log(counter === state)
+
+const onIncrement = () => {
+    counter.count++
+}
+</script>
+<template>
+    <div>
+        <h1>Counter {{ counter.count }}</h1>
+        <button @click="onIncrement">+</button>
+    </div>
+</template>
+<style></style>
+
+ref vs reactive:
+
+1.reactive api takes objects as parameter like literal object,collection types such as array,map,set. It cant hold primtive types such as string ,number or boolean
+
+2.ref can take any type of data.
+....................................................................................
+=>Reactive Conversion(changes) are even updated for deep nested objects 
+=>Reactive api compares every property in the object before ui re renders for changes.
+
+let obj={
+ 
+  a:1
+  b: {
+    c: {
+     d: {
+	    e:0
+     }
+    }
+  }
+}
+
+<script setup>
+import { reactive } from 'vue';
+
+
+const comments = reactive({
+    like: 0, dislike: 0, recommend: {
+        rating: {
+            value: 0
+        }
+    }
+})
+</script>
+<template>
+     <h1>Reactive State</h1>
+     <h1>Like : {{comments.like }} Dislike {{comments.dislike }} Rating Value {{comments.recommend.rating.value }}</h1>
+     <button @click="comments.like++">Like</button>
+     <button @click="comments.dislike++">Dislike</button>
+     <button @click="comments.recommend.rating.value++">Rating</button>
+
+</template>
+<style></style>
+..................................................................................
+  	 How to avoid deep conversion with Reactive Nested Object
+....................................................................................
+
+Some times i am going update only outter properties, but by default vue engine compares every property in the object, which degrade performance.
+
+There is an api which is built on the top of "reactive" called "shallowReactive"
+
+shallowReactive:
+  shallow version of reactive()
+ Unlike reactive there is no deep conversion, only root properties are reactive.
+
+<script setup>
+import { shallowReactive } from 'vue';
+
+const comments = shallowReactive({
+    like: 0, dislike: 0, recommend: {
+        rating: {
+            value: 0
+        }
+    }
+})
+</script>
+<template>
+     <h1>Reactive State</h1>
+     <h1>Like : {{comments.like }} Dislike {{comments.dislike }} Rating Value {{comments.recommend.rating.value }}</h1>
+     <button @click="comments.like++">Like</button>
+     <button @click="comments.dislike++">Dislike</button>
+     <button @click="comments.recommend.rating.value++">Rating</button>
+
+</template>
+<style></style>
+
+
+
+
 
 
 
