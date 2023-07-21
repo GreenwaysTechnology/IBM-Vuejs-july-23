@@ -3335,17 +3335,339 @@ const comments = shallowReactive({
 
 </template>
 <style></style>
+......................................................................................
+...................................................................................
+		   Reactivity ,State Mutation,and Object Destructuring
+...................................................................................
+After reactive object destructuring , can we do state mutations?
+ 
+
+<script setup>
+import { reactive } from 'vue';
 
 
+const { like, dislike, recommend } = reactive({
+    like: 0, dislike: 0, recommend: {
+        rating: {
+            value: 0
+        }
+    }
+})
+</script>
+<template>
+    <h1>Reactive State</h1>
+    <h1>Like : {{ like }} Dislike {{ dislike }} Rating Value {{ recommend.rating.value }}</h1>
+    <button @click="like++">Like</button>
+    <button @click="dislike++">Dislike</button>
+    <button @click="recommend.rating.value++">Rating</button>
+</template>
+<style></style>
+
+After running this code, you will see nothing happens
+
+   "Reactivity will be lost once if the object is destructured"
+
+What if i want destructuring and also reactivity
 
 
+How to convert destructured property into Reactive?
+
+1.toRef - single property
+2.toRefs - multiple property
+
+eg:
+<script setup>
+import { reactive, toRefs } from 'vue';
+
+const { like, dislike, recommend } = toRefs(reactive({
+    like: 0, dislike: 0, recommend: {
+        rating: {
+            value: 0
+        }
+    }
+}))
+const onLike = () => {
+    like.value++
+}
+
+</script>
+<template>
+    <h1>Reactive State</h1>
+    <h1>Like : {{ like }} Dislike {{ dislike }} Rating Value {{ recommend.rating.value }}</h1>
+    <button @click="onLike">Like</button>
+    <button @click="dislike++">Dislike</button>
+    <button @click="recommend.rating.value++">Rating</button>
+</template>
+<style></style>
+...................................................................................
+				Watchers
+...................................................................................
+
+What is Watcher?
+   Watcher is a function, which allows us to monitor an application state and trigger actions based on these changes.
+   Watchers that allows us to observe some data and perform specific actions when it changes.
+   It is more generic way to observe and react to data changes in the vue instance.
+
+ With watchers, we are not just able to watch a property and perform custom actions, we can also access the old value that is particular property is changing from, as well as the new value that it has changed to.
+
+Watcher is Options Api:
+......................
+<script>
+export default {
+    data() {
+        return {
+            counter: 0
+        }
+    },
+    watch: {
+        counter(newValue, oldValue) {
+            console.log('oldValue=>', oldValue, 'newValue=>', newValue)
+        }
+    }
+}
+</script>
+<template>
+    <h1>Counter {{counter }}</h1>
+    <button @click="counter++">+</button>
+</template>
+<style></style>
+....................................................................................
+			Watchers in Composition Api using Setup function
+.....................................................................................
+
+<script>
+import { ref, watch } from 'vue';
+
+export default {
+    setup() {
+        const counter = ref(0)
+        //watchers
+        watch(counter, (newValue, oldValue) => {
+            console.log('oldValue=>', oldValue, 'newValue=>', newValue)
+        })
+
+        return {
+            counter
+        }
+    }
+}
+</script>
+<template>
+    <h1>Counter {{ counter }}</h1>
+    <button @click="counter++">+</button>
+</template>
+<style></style>
+
+....................................................................................
+		Watchers in Composition Api using Setup attribute
+.....................................................................................
 
 
+<script setup>
+import { ref, watch } from 'vue';
+
+const counter = ref(0)
+//watchers
+watch(counter, (newValue, oldValue) => {
+    console.log('oldValue=>', oldValue, 'newValue=>', newValue)
+})
+</script>
+<template>
+    <h1>Counter {{ counter }}</h1>
+    <button @click="counter++">+</button>
+</template>
+<style></style>
+....................................................................................
+			 Object Properties and Watchers
+....................................................................................
+Watchers will trigger only when data is changed, meaning once the user starts interact or if any changes are deducted.
+
+we may want to perform certain actions with initial value of the property we are watching for our app might require that we send an API request with inital data and then repeat the process if the data changes.
+
+watch(comments, (newValue, oldValue) => {
+    console.log('oldValue=>', oldValue)
+    console.log('newValue=>', newValue)
+ }, {
+    // deep: true
+    immediate: true
+})
 
 
+<script setup>
+import { reactive, watch } from 'vue';
+
+const comments = reactive({
+    like: 0, dislike: 0, recommend: {
+        rating: {
+            value: 0
+        }
+    }
+})
+//watchers which watches all properties including ensted property
+// watch(comments, (newValue, oldValue) => {
+//     console.log('oldValue=>', oldValue, 'newValue=>', newValue)
+//     console.log('old value=>', oldValue.recommend.rating.value)
+//     console.log('new value=>', newValue.recommend.rating.value)
+
+// })
+//watchers which watches disable inner property changes
+
+watch(comments, (newValue, oldValue) => {
+    console.log('oldValue=>', oldValue)
+    console.log('newValue=>', newValue)
+  
+}, {
+    // deep: true
+    immediate: true
+})
+</script>
+<template>
+    <h1>Reactive State with Watchers</h1>
+    <h1>Like : {{ comments.like }} Dislike {{ comments.dislike }} Rating Value {{ comments.recommend.rating.value }}</h1>
+    <button @click="comments.like++">Like</button>
+    <button @click="comments.dislike++">Dislike</button>
+    <button @click="comments.recommend.rating.value++">Rating</button>
+</template>
+<style></style>
+....................................................................................
+			watch is simpilifed with "watchEffect" api
+.....................................................................................
+
+<script setup>
+import { ref, watch, watchEffect } from 'vue';
+
+const counter = ref(0)
+// //watchers
+// watch(counter, (newValue, oldValue) => {
+//     console.log('oldValue=>', oldValue, 'newValue=>', newValue)
+// })
+watchEffect(() => {
+    console.log('Watcher => ', counter.value)
+})
+</script>
+<template>
+    <h1>Counter {{ counter }}</h1>
+    <button @click="counter++">+</button>
+</template>
+<style></style>
+....................................................................................
+			 Watchers in Real time
+...................................................................................
+
+Real time conversion
+Real data fetch.....
+
+<script setup>
+import { ref, watch } from 'vue';
+
+const tmpCelsius = ref(0)
+const tmpFarenheit = ref(0)
+
+watch(tmpCelsius, newValue => {
+    tmpFarenheit.value = Math.round((newValue * 9) / 5 + 32)
+})
+
+</script>
+<template>
+    <h1>TmpFarenheit {{ tmpFarenheit }}</h1>
+    <button @click="tmpCelsius+=3">TmpFarenheit</button>
+</template>
+<style></style>
+.....................................................................................
+....................................................................................
+				List Rendering -Arrays
+....................................................................................
+Arrays:
+ =>Arrays are basic datastructure which is used to render collection of data
+ =>Arrays are dynamic
 
 
+Arrays and UI:
+ if you want render more data, then array is used.
+Arrays can help to build in UI layouts in various ways
 
+UI layouts:
+ are built with help of arrays.
+
+1.List View
+ <ul>
+   <li>
+ </ul>
+2.Card View layout
+  <div><header><section>
+3.Grid view
+  table
+
+<script setup>
+import { reactive } from 'vue';
+import TODOS from './mock-data/todos'
+const todos = reactive(TODOS)
+</script>
+<template>
+    <div>
+        <ul>
+            <li v-for="todo in todos">
+                <span>{{ todo.title }}</span>
+            </li>
+        </ul>
+    </div>
+</template>
+<style></style>
+...................................................................................
+			 List with Index
+..................................................................................
+<script setup>
+import { reactive } from 'vue';
+import TODOS from './mock-data/todos'
+const todos = reactive(TODOS)
+</script>
+<template>
+    <div>
+        <ul>
+            <li v-for="(todo,index) in todos">
+                <span> {{index}} {{ todo.title }}</span>
+            </li>
+        </ul>
+    </div>
+</template>
+<style></style>
+.....................................................................................
+....................................................................................			                      Key
+....................................................................................
+if there is re ordering in the list when we do some changes like sorting, filtering 
+vue uses an alogorthim called "path"
+
+We can tell to that alogrthim we can re arrange , that where key attribute comes into picture
+
+Key's value must be unique.
+
+....................................................................................			                      Key
+....................................................................................
+if there is re ordering in the list when we do some changes like sorting, filtering 
+vue uses an alogorthim called "path"
+
+We can tell to that alogrthim we can re arrange , that where key attribute comes into picture
+
+Key's value must be unique.
+
+<script setup>
+import { reactive} from 'vue'
+import TODOS from './mock-data/todos'
+//deep nesting
+const todos = reactive(TODOS)
+
+</script>
+<template>
+    <div>
+      <ul>
+        <li v-for="(todo,index) in todos" :key="todo.id">
+          <!-- <span>{{index}} {{todo.title}}</span> -->
+          <span>{{todo.title}}</span>
+        </li>
+      </ul>
+
+    </div>
+</template>
 
 
 

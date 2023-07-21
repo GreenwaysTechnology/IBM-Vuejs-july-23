@@ -6,8 +6,8 @@ const todos = reactive(TODOS)
 <template>
     <div>
         <ul>
-            <li v-for="(todo,index) in todos" :key="todo.id">
-                <span> {{index}} {{ todo.title }}</span>
+            <li v-for="todo in todos">
+                <span>{{ todo.title }}</span>
             </li>
         </ul>
     </div>
