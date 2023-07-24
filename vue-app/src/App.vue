@@ -1,15 +1,30 @@
 <script setup>
-import { reactive } from 'vue';
-import TODOS from './mock-data/todos'
-const todos = reactive(TODOS)
+import { computed, reactive } from 'vue';
+
+const author = reactive({
+    name: 'Subramanian',
+    trainings: [
+        'Vue 3',
+        'React js',
+        'Microservices'
+    ]
+})
+//computed method enables caching by default
+const isTrainingDone = computed(() => {
+    console.log('computed property method')
+    return author.trainings.length > 0 ? "Yes" : "No"
+
+})
+//normal method gets called every time...
+const isTrainingHandled = () => {
+    console.log('Normal method')
+    return author.trainings.length > 0 ? "Yes" : "No"
+}
 </script>
 <template>
-    <div>
-        <ul>
-            <li v-for="(todo,index) in todos" :key="todo.id">
-                <span> {{index}} {{ todo.title }}</span>
-            </li>
-        </ul>
-    </div>
+    <h1>{{ isTrainingDone }}</h1>
+    <h1>{{ isTrainingHandled() }}</h1>
+
+    <h1>{{ isTrainingDone }}</h1>
+    <h1>{{ isTrainingHandled() }}</h1>
 </template>
-<style></style>

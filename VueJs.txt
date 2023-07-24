@@ -3668,6 +3668,309 @@ const todos = reactive(TODOS)
 
     </div>
 </template>
+.....................................................................................
+				Array Mutations
+....................................................................................
+Push, remove,update array elements
 
+<script setup>
+import { reactive } from 'vue';
+
+const todos = reactive([])
+
+const addItem = evt => {
+    todos.push({ id: Math.random(), text: 'Learn Vue!' })
+}
+</script>
+<template>
+    <ul>
+        <h1>Todo App</h1>
+        <hr />
+        <li v-for="todo in todos">
+            <span>{{ todo }}</span>
+        </li>
+        <button @click="addItem">Add Todo</button>
+    </ul>
+</template>
+
+In vue all array api will not trigger render cycle.
+
+API which triggers render cycle - Mutatating apis
+
+push
+pop
+shift
+unshift
+splice 
+sort
+reverse
+...................................................................................
+			  Displaying filtered/sorted Array
+....................................................................................
+
+Sometimes we want to display filtered or sorted version of an array without actually mutating or resetting the original data.
+
+We are going to use array immutable apis.
+
+What is immutable api?
+ When ever we do any changes on object, instead of changing original object changes, which creates a new copy of the object -immuatble.
+
+for eg, if you add any new item into array, the runtime will create new array, instead of mutating original memory.
+
+
+Array immutable apis
+map,filter,reduce
+or
+you can use spread operator or Object.assign method.
+
+<script setup>
+import { ref } from 'vue';
+import TODOS from './mock-data/todos'
+const todos = ref(TODOS)
+
+const filter = () => {
+    todos.value = todos.value.filter(todo => todo.completed)
+}
+
+</script>
+<template>
+    <div>
+        <button @click="filter">FilterByStatus</button>
+        <h1>Total Items: {{ todos.length }}</h1>
+        <ul>
+            <li v-for="todo in todos" :key="todo.id">
+                <span>{{ todo.title }} {{ todo.completed ? "Completed" : "Not Completed" }}</span>
+            </li>
+        </ul>
+    </div>
+</template>
+...................................................................................
+			  Computed Properties
+..................................................................................
+
+In vuejs, there are serveral ways to set static or dynamic values to display on the template.
+These include using text interpolation, directly hardcoding into your HTML or even using simple expressions to modify the data.
+
+This is where computed properties come in super handy.
+
+What are computed properties?
+
+In vue js computed properties enable you to create a property that can be used to modify,manipulate, and display data within your components in a readable and efficient manner.
+
+You can use computed properties to calculate and display values based on a value or set of values in the data model.
+
+It can also have some custom logic that is cached based on its dependencies, even though page reloads, it does not change.
+
+Eg;
+Computed Properties in options api.
+
+Without computed property to display value:
+<script>
+export default {
+    data() {
+        return {
+            productNo: 2
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <h1>{{ 'Your Product No ' + productNo }}</h1>
+    </div>
+</template>
+
+
+With Computed Property:
+<script>
+export default {
+    data() {
+        return {
+            productNo: 2
+        }
+    },
+    computed: {
+        product() {
+            return `Your Product No is ${this.productNo}`
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <!-- <h1>{{ 'Your Product No ' + productNo }}</h1> -->
+        <h1>{{product}}</h1>
+    </div>
+</template>
+
+Use cases of Computed Properties:
+.................................
+ Computed Properties are used to solve more complex problems
+
+1.Filtering data
+  Computing properties are great for filtering data.
+for eg, lets say you are filtering an array from input search bar.
+
+<script>
+import TODOS from './mock-data/todos'
+export default {
+    data() {
+        return {
+            todos: TODOS,
+            searchQuery: null
+        }
+    },
+    computed: {
+        resultQuery() {
+            if (this.searchQuery) {
+                //filter logic
+                return this.todos.filter(item => {
+                    console.log(item)
+                    return this.searchQuery.toLowerCase().split(" ").every(v => item.title.toLowerCase().includes(v))
+                });
+            } else {
+                return this.todos
+            }
+        }
+    }
+}
+</script>
+<template>
+    <div>
+        <div>
+            <input v-model="searchQuery" type="text">
+            <div v-for="todo in resultQuery" :key="todo.id">
+                   <p> {{todo.id}} {{ todo.title }}</p> 
+            </div>
+        </div>
+    </div>
+</template>
+
+Dynamic Computations: Dynamic calcualtions:
+............................................
+<script>
+export default {
+    data() {
+        return {
+            number: 2
+        }
+    },
+    computed: {
+        doubleIt() {
+            return this.number * 2
+        }
+    }
+
+}
+</script>
+<template>
+    <h1>Value {{ doubleIt }}</h1>
+</template>
+
+Dynamic Toggling:
+.................
+<script>
+export default {
+    data() {
+        return {
+            status: true
+        }
+    },
+    computed: {
+        toggle() {
+            if (this.status) {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+
+}
+</script>
+<template>
+    <h1>Value {{ toggle }}</h1>
+    <button @click="status = !status">Toggle</button>
+</template>
+....................................................................................
+		  Computed Properties and Composition api
+
+setup attribute and setup function syntax remains same.
+
+<script setup>
+import { computed, ref } from 'vue';
+const product = ref(2)
+const productNo = computed(() => {
+    return product.value
+})
+</script>
+<template>
+    <div>
+        <h1>{{ productNo }}</h1>
+    </div>
+</template>
+
+..
+<script setup>
+import { computed, reactive } from 'vue';
+import TODOS from './mock-data/todos'
+const state = reactive({ todos: TODOS, searchQuery: null })
+
+const resultQuery = computed(() => {
+    if (state.searchQuery) {
+        return state.todos.filter(item => {
+            return state.searchQuery.toLowerCase().split(" ").every(v => item.title.toLowerCase().includes(v))
+        });
+    } else {
+        return state.todos
+    }
+});
+</script>
+<template>
+    <div>
+        <div>
+            <input v-model="state.searchQuery" type="text">
+            <div v-for="todo in resultQuery" :key="todo.id">
+                <p> {{ todo.id }} {{ todo.title }}</p>
+            </div>
+        </div>
+    </div>
+</template>
+.....................................................................................
+			Caching and Computed Properties
+		    (Normal Methods vs Computed Properties)
+
+<script setup>
+import { computed, reactive } from 'vue';
+
+const author = reactive({
+    name: 'Subramanian',
+    trainings: [
+        'Vue 3',
+        'React js',
+        'Microservices'
+    ]
+})
+//computed method enables caching by default
+const isTrainingDone = computed(() => {
+    console.log('computed property method')
+    return author.trainings.length > 0 ? "Yes" : "No"
+
+})
+//normal method gets called every time...
+const isTrainingHandled = () => {
+    console.log('Normal method')
+    return author.trainings.length > 0 ? "Yes" : "No"
+}
+</script>
+<template>
+    <h1>{{ isTrainingDone }}</h1>
+    <h1>{{ isTrainingHandled() }}</h1>
+
+    <h1>{{ isTrainingDone }}</h1>
+    <h1>{{ isTrainingHandled() }}</h1>
+</template>
+...................................................................................
+			  Data sharing patterns
 
 
