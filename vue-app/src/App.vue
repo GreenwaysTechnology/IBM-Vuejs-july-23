@@ -1,30 +1,21 @@
 <script setup>
-import { computed, reactive } from 'vue';
+import { ref } from 'vue';
+import MyButton from './components/attributeinheritence/MyButton.vue'
 
-const author = reactive({
-    name: 'Subramanian',
-    trainings: [
-        'Vue 3',
-        'React js',
-        'Microservices'
-    ]
-})
-//computed method enables caching by default
-const isTrainingDone = computed(() => {
-    console.log('computed property method')
-    return author.trainings.length > 0 ? "Yes" : "No"
-
-})
-//normal method gets called every time...
-const isTrainingHandled = () => {
-    console.log('Normal method')
-    return author.trainings.length > 0 ? "Yes" : "No"
-}
+const title = ref('Click')
 </script>
 <template>
-    <h1>{{ isTrainingDone }}</h1>
-    <h1>{{ isTrainingHandled() }}</h1>
-
-    <h1>{{ isTrainingDone }}</h1>
-    <h1>{{ isTrainingHandled() }}</h1>
+    <MyButton :title="title" class="fancy-btn"></MyButton>
 </template>
+<style>
+.fancy-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+    font-size: 16px;
+}
+</style>

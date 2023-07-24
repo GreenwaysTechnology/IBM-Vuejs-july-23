@@ -1,7 +1,5 @@
-// import './assets/main.css'
-
+import './assets/app.css'
 import { createApp } from 'vue'
-
 import App from './App.vue'
 import StatusBar from './components/global/StatusBar.vue'
 
