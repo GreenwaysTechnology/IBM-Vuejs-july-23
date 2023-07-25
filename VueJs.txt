@@ -4283,9 +4283,508 @@ What if i have multiple button elements?
         <button v-bind="$attrs">{{ props.title }}</button>
     </div>
 .....................................................................................
+		Can we override parent class attribute in child compoent
+
+Yes! but by default which is not overriden.
+
+How to to override?
+
+<style scoped>
+.fancy-btn {
+    background-color: #57222c;
+}
+</style>
+
+We need to add "scoped" attribute 
+.....................................................................................
+What if i dont want attribute inheritance?
+
+Note: 
+ If single only single element  attribute inheritance  can be stopped
+
+<script setup>
+defineOptions({
+    inheritAttrs: false
+})
+</script>
+<template>
+ <button>
+</template>
+
+eg:
+<script setup>
+defineOptions({
+    inheritAttrs: false
+})
+const props = defineProps(['title'])
+</script>
+<template>
+    <button>{{ props.title }}</button>    
+</template>
+<style>
+.fancy-btn {
+    background-color: #57222c;
+}
+</style>
+
+If template is having multiple elements,attribute inheritance is enabled always.
+.....................................................................................
+			Component as Prop/DOM element as Prop
+				 (Slot)
+.....................................................................................
+How to represent components?
+  <MyComponent>
+	 ? -  child elements - it could be dom element or another component
+ </MyComponent>
+ <MyComponent/>- Component has no childrens
+
+<MyCompoent>
+	You are sending html element or another component =>Slot Content
+</MyComponent>
+
+In order to access element or component as prop inside child compoent vue offers built in component "slot" -  which is place holder where the elements to be inserted.
+
+Parent Component src/App.vue
+
+<script setup>
+import ChildSlot from './components/slots/ChildSlot.vue';
+
+</script>
+<template>
+    <div>
+        <h1>Parent</h1>
+        <ChildSlot>
+                <!-- Pass dom element as prop -->
+                <h1>DOM element as Prop</h1>
+        </ChildSlot>
+    </div>
+</template>
+
+Child component src/components/slots/ChildSlot.vue
+
+<script setup>
+
+</script>
+<template>
+     <div>
+        <h1>Child </h1>
+        <hr>
+        <slot></slot>
+     </div>
+</template>
+....................................................................................
+			   Fallback Content
+////////////////////////////////////////////////////////////////////////////////////
+
+<script setup>
+import ChildSlot from './components/slots/ChildSlot.vue';
+
+</script>
+<template>
+    <div>
+        <h1>Parent</h1>
+        <ChildSlot>
+        </ChildSlot>
+        <ChildSlot>
+            <h1>Here i am passing</h1>
+        </ChildSlot>
+    </div>
+</template>
+
+Child component src/components/slots/ChildSlot.vue
+
+<script setup>
+
+</script>
+<template>
+     <div>
+        <h1>Child </h1>
+        <hr>
+        <slot>
+		
+	</slot>
+     </div>
+</template>
+.....................................................................................
+				Component as Prop
+.....................................................................................
+
+src/components/slots/Image.vue
+<script setup>
+
+</script>
+<template>
+    <img src="../../assets/logo.svg" height="100" width="100" />
+</template>
+
+src/components/slots/Image.vue
+<script setup>
+
+</script>
+<template>
+    <div>
+        <slot>
+            
+        </slot>
+    </div>
+</template>
+
+src/App.vue
+<script setup>
+import Panel from './components/slots/PanelVue.vue'
+import Image from './components/slots/Image.vue'
+</script>
+<template>
+    <Panel>
+        <Image />
+    </Panel>
+</template>
+...................................XXXXX...........................................
+				Multi Slot
+...................................................................................
+
+We can have more than one Slots
+
+Without slot
+<Layout>
+  <Header/>
+  <Body/>
+  <Footer/>
+</Layout>
+
+<Layout>
+  <Header>
+	<!--Header information -->
+  </Header>
+  <Body>
+	<!--Body information -->
+  </Body>
+  <Footer>
+       <!--Footer information -->
+  </Footer>
+</Layout>
+
+eg:
+Child
+<slot name="header"></slot>
+Parent
+<template v-slot:header>
+
+</template>
+App.vue -Parent:
+<script setup>
+import Layout from './Layout.vue'
+</script>
+<template>
+    <h1>Vue Application</h1>
+    <Layout>
+        <template v-slot:header>
+            <h1>Header</h1>
+        </template>
+        <template v-slot:main>
+            <p>This is body</p>
+        </template>
+        <template v-slot:footer>
+            <h3>Footer</h3>
+        </template>
+    </Layout>
+</template>
+<style>
+
+</style>
+
+Child
+
+Layout.vue
+
+<script setup>
+
+</script>
+<template>
+    <header>
+        <slot name="header">
+            <h1>Default Header</h1>
+        </slot>
+    </header>
+    <main>
+        <slot name="main">
+            <p>This is default Main</p>
+        </slot>
+
+    </main>
+    <footer>
+        <slot name="footer">
+            <h1>Default Footer</h1>
+        </slot>
+
+    </footer>
+</template>
+<style>
+
+</style>
+................................................................................
+	 Without V-Slot Directive , we can use #name
+
+      <template v-slot:header>
+            <h1>Header</h1>
+        </template>
+        <template v-slot:main>
+            <p>This is body</p>
+        </template>
+        <template v-slot:footer>
+            <h3>Footer</h3>
+        </template>
+
+
+      <template #header>
+            <h1>Header</h1>
+        </template>
+        <template #main>
+            <p>This is body</p>
+        </template>
+        <template #footer>
+            <h3>Footer</h3>
+        </template>
+
+eg:
+<script setup>
+import Layout from './components/slots/Layout.vue'
+</script>
+<template>
+    <h1>Vue Application</h1>
+    <Layout>
+        <!-- <template v-slot:header>
+            <h1>Header</h1>
+        </template>
+        <template v-slot:main>
+            <p>Body</p>
+        </template>
+        <template v-slot:footer>
+            <h3>Footer</h3>
+        </template> -->
+        <template #header>
+            <h1>Header</h1>
+        </template>
+        <template #main>
+            <p>Body</p>
+        </template>
+        <template #footer>
+            <h3>Footer</h3>
+        </template>
+    </Layout>
+</template>
+
+.....................................................................................
+				Default slots
+....................................................................................
+The slot without name is called "default slot"
+
+In case of multi slot , we can make any slot as default one.
+
+Child:
+    <main>
+        <!-- <slot name="main">
+            <p>This is default Main</p>
+        </slot> -->
+        <!-- Default Slot : Slot without Name -->
+        <slot>
+            <p>This is default Main</p>
+
+        </slot>
+
+    </main>
+
+Parent:
+ <template #default>
+ </template>
+eg:
+Parent Component
+<script setup>
+import Layout from './Layout.vue'
+</script>
+<template>
+    <h1>Vue Application</h1>
+    <Layout>
+        <!-- <template v-slot:header>
+            <h1>Header</h1>
+        </template>
+        <template v-slot:main>
+            <p>This is body</p>
+        </template>
+        <template v-slot:footer>
+            <h3>Footer</h3>
+        </template> -->
+        <template #header>
+            <h1>Header</h1>
+        </template>
+        <template #default>
+            <p>This is body</p>
+        </template>
+        <template #footer>
+            <h3>Footer</h3>
+        </template>
+    </Layout>
+</template>
+<style>
+
+</style>
+
+child Component:
+
+<script setup>
+
+</script>
+<template>
+    <header>
+        <slot name="header">
+            <h1>Default Header</h1>
+        </slot>
+    </header>
+    <main>
+        <!-- <slot name="main">
+            <p>This is default Main</p>
+        </slot> -->
+        <!-- Default Slot : Slot without Name -->
+        <slot>
+            <p>This is default Main</p>
+
+        </slot>
+
+    </main>
+    <footer>
+        <slot name="footer">
+            <h1>Default Footer</h1>
+        </slot>
+
+    </footer>
+</template>
+<style>
+....................................................................................
+				...................................................................................
+				Dynamic Slots
+...................................................................................
+
+The slot name can be dynamic
+
+Static slot:
+
+<template v-slot:header>
+<template #header>
+<template #default>
+
+
+Dynamic Slot:
+
+const header = ref('header')
+
+<template v-slot:[header]>
+<template #[header]>
 
 
 
+Dynamic Slot:
+
+const header = ref('header')
+
+<template v-slot:[header]>
+<template #[header]>
+
+<script setup>
+import { ref } from 'vue';
+import Layout from './Layout.vue'
+
+const header =ref('header')
+</script>
+<template>
+    <h1>Vue Application</h1>
+    <Layout>
+        <!-- <template v-slot:header>
+            <h1>Header</h1>
+        </template>
+        <template v-slot:main>
+            <p>This is body</p>
+        </template>
+        <template v-slot:footer>
+            <h3>Footer</h3>
+        </template> -->
+        <template #[header]>
+            <h1>Header</h1>
+        </template>
+        <template #default>
+            <p>This is body</p>
+        </template>
+        <template #footer>
+            <h3>Footer</h3>
+        </template>
+    </Layout>
+</template>
+<style>
+</style>
+.....................................................................................
+
+....................................................................................
+			   Slots Scope
+....................................................................................
+Slots scope enable data accssibility(sharing) for parent and child components.
+
+There are two slot scope
+1.Render scope
+2.Scoped slots
+
+Render Scope:
+............
+Slot content has access to the data scope of the parent component, because it is defined in the parent. For example:
+
+<span>{{ message }}</span>
+<FancyButton>{{ message }}</FancyButton>
+
+Here both {{ message }} interpolations will render the same content.
+
+Slot content does not have access to the child component's data. Expressions in Vue templates can only access the scope it is defined in, consistent with JavaScript's lexical scoping. In other words:
+
+Expressions in the parent template only have access to the parent scope; expressions in the child template only have access to the child scope.
+
+	 "As rule of thumb every thing in the template compiled in the parent scope;
+          every thing is compiled in the child template in the child scope"
 
 
+Scoped Slots:
+.............
+   if you want to access data in the parent and child scope.
 
+  "if parent component want to access child  state(data),the child can pass data to   parent via "slot" when rendering it"
+
+  Slot can act as bridge between parent and child for data transfer.
+
+Syntax:
+ <slot :firstName="firstName" :age="age" />
+
+
+eg:
+Child -ScopeSlot.vue
+<script setup>
+import {ref} from 'vue'
+const message = ref('Hello')
+
+</script>
+<template>
+    <!-- send data to parent via slot -->
+    <slot :message="message"></slot>
+</template>
+<style>
+</style>
+
+Parent:
+App.vue
+<script setup>
+import ScopeSlot from './ScopeSlot.vue';
+
+</script>
+<template>
+    <h1>Scoped Slots</h1>
+    <ScopeSlot v-slot="slotprops">
+        {{slotprops.message}}
+    </ScopeSlot>
+</template>
+<style>
+</style>
