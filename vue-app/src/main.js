@@ -1,5 +1,5 @@
 import './assets/app.css'
-import { createApp } from 'vue'
+import { createApp, readonly } from 'vue'
 import App from './App.vue'
 import StatusBar from './components/global/StatusBar.vue'
 
@@ -12,4 +12,5 @@ import StatusBar from './components/global/StatusBar.vue'
 //shortcuts 
 createApp(App)
  .component('StatusBar',StatusBar)
+ .provide('companyName','IBM')
  .mount('#app')
