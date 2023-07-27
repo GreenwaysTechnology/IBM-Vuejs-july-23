@@ -6050,38 +6050,6 @@ const color = ref('blue')
 </template>
 <style>
 </style>
-....................................................................................
-....................................................................................
-			   Plugins
-....................................................................................
-What is plugin?
-
- Plugins are self contained code that usuallay add app-top level functionality to Vue.
-Most of third party libs are integrated as plugin with vue echo system eg: Vue-router
-Statement management libs like vuex,Pinia.
-
-Plugins are distribtued as npm modules, in order to use plugins, we have to do two things
-
-1.install plugin as npm moudle
-
- npm install vue-router@4
-
-2.Integrate with Application object
-
-const app =createApp(App)
-
-//directives
-app.directive('demo',{})
-//components
-app.components('component',{})
-
-//plugins
-app.use(myPlugin)
-app.use(router)
-
-app.mount("#app");
-.....................................................................................
-....................................................................................
 			   Plugins
 ....................................................................................
 What is plugin?
@@ -6250,8 +6218,221 @@ directives
 router:
  It holds router app configuration.
 
+		 Steps for building spa
+
+1.router configuration:
+router/index.js
+
+import Home from '../components/Home.vue'
+import HelloWorld from '../components/HelloWorld.vue';
+import { createRouter, createWebHistory } from 'vue-router'
 
 
+//route configuration
+const routes = [
+    {
+        path: '/',
+        component: Home
+    },
+    {
+        path: '/hello',
+        component: HelloWorld
+    }
+]
+//create router object
+const router = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes
+})
+
+export default router;
+
+2.main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+
+createApp(App)
+    .use(router)
+    .mount('#app')
+
+3.routing/index.js
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: HomeView
+    },
+    {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/review',
+      name: 'reivew',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ReviewVue.vue')
+    }
+  ]
+})
+
+export default router
+
+
+App.vue
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+// import HelloWorld from './components/HelloWorld.vue'
+</script>
+
+<template>
+  <header>
+    <h1>Vue App Routing</h1>
+    <div>
+      <!-- <HelloWorld msg="You did it!" /> -->
+      <nav>
+        <ul>
+          <li>
+            <RouterLink to="/">Home</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/about">About</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/review">Review</RouterLink>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
+</template>
+
+<style scoped>
+h1 {
+  text-align: center;
+}
+</style>
+
+..................................................................................
+			   Dynamic routing : Dynamic Urls
+.................................................................................
+
+/users/:id  
+/users/1 
+
+route configuration
+  {
+      path: '/users/:id',
+      name: 'users',
+      component: () => import('../views/UsersView.vue')
+    }
+
+UsersView.vue
+<script setup>
+</script>
+<template>
+    <h1>User details</h1>
+</template>
+
+http://localhost:5173/users/2
+
+How to read route parameter?
+
+Inside Template:
+<script setup>
+
+</script>
+<template>
+    <h1>User details</h1>
+    {{$route.params}}
+    {{$route.params.id}} details
+</template>
+
+
+Inside script:
+import { useRoute } from 'vue-router';
+const route = useRoute()
+console.log(route.params.id)
+....................................................................................
+....................................................................................
+			 Master Details 
+
+
+Route Configuration:
+   {
+      path: '/users',
+      name: 'users',
+      component: () => import('../views/UsersView.vue')
+    },
+    {
+      path: '/details/:id',
+      name: 'details',
+      component: () => import('../views/UsersDetailsView.vue')
+    }
+
+Components:
+UserView.vue
+<script setup>
+import UserList from "../components/users/UserList.vue";
+</script>
+<template>
+    <UserList></UserList>
+</template>
+
+UserList.vue
+<script setup>
+import { reactive } from 'vue';
+
+const USERS = [
+    { id: 12, name: 'Dr. Nice' },
+    { id: 13, name: 'Bombasto' },
+    { id: 14, name: 'Celeritas' },
+    { id: 15, name: 'Magneta' },
+    { id: 16, name: 'RubberMan' },
+    { id: 17, name: 'Dynama' },
+    { id: 18, name: 'Dr. IQ' },
+    { id: 19, name: 'Magma' },
+    { id: 20, name: 'Tornado' }
+];
+const users = reactive(USERS)
+</script>
+<template>
+    <h1>User List</h1>
+    <ul>
+        <li v-for="user of users">
+            <RouterLink :to="'/details/'+ user.id">
+                <span>{{user.name}}</span>
+            </RouterLink>
+        </li>
+    </ul>
+</template>
+
+UsersDetails.vue
+<script setup>
+</script>
+<template>
+    <h1>{{$route.params.id}}</h1>
+</template>
+
+Build master details:
+ 
+Inside loop:
+  <RouterLink :to="'/details/'+ user.id">
+                <span>{{user.name}}</span>
+  </RouterLink>
 
 
 
