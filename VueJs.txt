@@ -6433,6 +6433,430 @@ Inside loop:
   <RouterLink :to="'/details/'+ user.id">
                 <span>{{user.name}}</span>
   </RouterLink>
+.....................................................................................
+....................................................................................
+			 Named Routes
+....................................................................................
+
+Without Named routes
+
+const routes = [
+ {
+   path:'/details/:id',
+   component:UserDetails
+ }
+]
+  <RouterLink :to="'/details/'+ user.id">
+                <span>{{user.name}}</span>
+  </RouterLink>
+
+Here we have to refer the whole path, instead we can simply using names
+
+const routes = [
+ {
+   path:'/details/:id',
+   name:'details',
+   component:UserDetails
+ }
+]
+
+    <RouterLink :to="{name:'details',params:{id:user.id} }">
+                <span>{{user.name}}</span>
+     </RouterLink>
+eg:
+
+rout config
+  {
+      path: '/details/:id',
+      name: 'details',
+      component: () => import('../views/UsersDetailsView.vue')
+    }
+<script setup>
+import { reactive } from 'vue';
+
+const USERS = [
+    { id: 12, name: 'Dr. Nice' },
+    { id: 13, name: 'Bombasto' },
+    { id: 14, name: 'Celeritas' },
+    { id: 15, name: 'Magneta' },
+    { id: 16, name: 'RubberMan' },
+    { id: 17, name: 'Dynama' },
+    { id: 18, name: 'Dr. IQ' },
+    { id: 19, name: 'Magma' },
+    { id: 20, name: 'Tornado' }
+];
+const users = reactive(USERS)
+</script>
+<template>
+    <h1>User List</h1>
+    <ul>
+        <li v-for="user of users">
+            <!-- <RouterLink :to="'/details/'+ user.id">
+                <span>{{user.name}}</span>
+            </RouterLink> -->
+            <!-- With Named Routing -->
+            <RouterLink :to="{name:'details',params:{id:user.id} }">
+                <span>{{user.name}}</span>
+            </RouterLink>
+        </li>
+    </ul>
+</template>
+....................................................................................
+				Nested Routers
+.....................................................................................
+Building Sub menus;
+...................
+
+Movie
+
+ Sci
+ Adv
+ drama
+
+eg:
+
+Route Configuration
+{
+      path: '/movies',
+      name: 'movies',
+      component: () => import('../views/MoviesView.vue'),
+      children: [
+        {
+          path: 'action',
+          component: () => import('../views/ActionView.vue'),
+        },
+        {
+          path: 'drama',
+          component: () => import('../views/DramaView.vue'),
+        },
+        {
+          path: 'horror',
+          component: () => import('../views/HorrorView.vue'),
+        }
+      ]
+    }
+
+App.vue
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+// import HelloWorld from './components/HelloWorld.vue'
+</script>
+
+<template>
+  <header>
+    <h1>Vue App Routing</h1>
+    <div>
+      <!-- <HelloWorld msg="You did it!" /> -->
+      <nav>
+        <ul>
+          <li>
+            <RouterLink to="/">Home</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/about">About</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/review">Review</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/users">Users</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/movies">Movies</RouterLink>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
+</template>
+
+<style scoped>
+h1 {
+  text-align: center;
+}
+</style>
+
+MoviesReview.vue
+<script setup>
+</script>
+<template>
+    <h1>Movie View</h1>
+    <ul>
+        <li>
+            <RouterLink to="/movies/action">
+                <span>Action</span>
+            </RouterLink>
+        </li>
+        <li>
+            <RouterLink to="/movies/drama">
+                <span>Drama</span>
+            </RouterLink>
+        </li>
+        <li>
+            <RouterLink to="/movies/horror">
+                <span>Horror</span>
+            </RouterLink>
+        </li>
+    </ul>
+    <RouterView />
+</template>
+
+
+ActionView.vue
+<script setup>
+</script>
+<template>
+    <h1>Action</h1>
+</template>
+.....................................................................................				 Redirections
+
+  {
+      path: '/',
+      redirect: { name: 'home' }
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: HomeView
+    },
+
+eg:
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import ReviewView from '../views/ReviewView.vue'
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      //component: HomeView
+      redirect: { name: 'home' }
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: HomeView
+    },
+    {
+      path: '/review',
+      name: 'review',
+      component: ReviewView
+    },
+
+    {
+      path: '/users',
+      name: 'users',
+      component: () => import('../views/UsersView.vue')
+    },
+    {
+      path: '/details/:id',
+      name: 'details',
+      component: () => import('../views/UsersDetailsView.vue')
+    },
+    {
+      path: '/movies',
+      name: 'movies',
+      component: () => import('../views/MoviesView.vue'),
+      children: [
+        {
+          path: '',
+          redirect: { name: 'action' }
+        },
+        {
+          path: 'action',
+          name: 'action',
+          component: () => import('../views/ActionView.vue'),
+        },
+        {
+          path: 'drama',
+          component: () => import('../views/DramaView.vue'),
+        },
+        {
+          path: 'horror',
+          component: () => import('../views/HorrorView.vue'),
+        }
+      ]
+    },
+    {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AboutView.vue')
+    }
+  ]
+})
+
+export default router
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+</script>
+<template>
+    <h1>Movie View</h1>
+    <ul>
+        <li>
+            <RouterLink to="/movies/action">
+                <span>Action</span>
+            </RouterLink>
+        </li>
+        <li>
+            <RouterLink to="/movies/drama">
+                <span>Drama</span>
+            </RouterLink>
+        </li>
+        <li>
+            <RouterLink to="/movies/horror">
+                <span>Horror</span>
+            </RouterLink>
+        </li>
+    </ul>
+    <RouterView />
+</template>
+
+/////////////////////////////////////////////////////////////////////////////////
+..................................................................................
+				Programmetic Navigation
+
+Using Router Object we can navigate to Views
+
+
+const router = useRouter()
+
+Syntax:
+string:
+  router.push('/users')
+ 
+object Notation
+ router.push({path:'/user'})
+ 
+passing params 
+ router.push({path:'/user',params:{userid:1}}
+
+Query Strings:
+  /user?type=admin
+ router.push({path:'/user',query:{type:'admin'})
+
+
+
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const gotoReview = () => {
+    router.push('/review')
+}
+</script>
+<template>
+    <h1>Movie View</h1>
+    <ul>
+        <li>
+            <RouterLink to="/movies/action">
+                <span>Action</span>
+            </RouterLink>
+        </li>
+        <li>
+            <RouterLink to="/movies/drama">
+                <span>Drama</span>
+            </RouterLink>
+        </li>
+        <li>
+            <RouterLink to="/movies/horror">
+                <span>Horror</span>
+            </RouterLink>
+        </li>
+    </ul>
+    <RouterView />
+    <button @click="gotoReview">Review</button>
+</template>
+.....................................................................................	
+/////////////////////////////////////////////////////////////////////////////////
+			Routing and Props
+
+const User = {
+  // make sure to add a prop named exactly like the route param
+  props: ['id'],
+  template: '<div>User {{ id }}</div>'
+}
+const routes = [{ path: '/user/:id', component: User, props: true }]
+..................................................................................
+			Building CURD APP
+...................................................................................
+
+Menu - 1 - Home Page
+-----------------------------------------------------------------------------------
+  Products        Add New Product
+....................................................................................
+
+As soon as you land the Home page , you have display Products Page
+-----------------------------------------------------------------------------------
+  Products        Add New Product
+....................................................................................
+   Search Text Box  : Search Button
+
+  Product 1 
+  Product 2
+  Product 3
+  Product 4
+  Product 5
+
+The Product details must be fetched from the api- Use composable
+You have to create ProductList Component,Search Compoent
+When ever you type product name , it should filter and show only filtered result.
+
+-----------------------------------------------------------------------------------
+  Products        Add New Product
+....................................................................................
+   Search Text Box  : Search Button
+
+  Product 1 
+  Product 2
+  Product 3
+  Product 4
+  Product 5
+
+When you select a product, you should display the product details in the next page
+Product details page.
+
+Product 1 details
+Name:....
+Description:.....
+status: available or outof stock
+Edit Button
+
+When you edit , it should allow to load description,status, into separate edit page..
+
+after edition, you must have save and return to the product list page
+
+Optional Feature:
+ Delete 
+
+Product 1 details
+Name:....
+Description:.....
+status: available or outof stock
+Edit Button  Delete Button
+
+When you click delete button,it should ask do you want to delete, if you yes, delete the product and navigate to list
+
+ Add New Product
+
+It should display product add page, get all details and save send to api.
+
+
+How to setup api?
+
+https://github.com/typicode/json-server	
+
+
+
+
+
+
+
 
 
 
