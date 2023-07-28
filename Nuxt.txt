@@ -1,0 +1,350 @@
+                            NUXT 3
+.....................................................................................
+
+What is Nuxt ?
+  Nuxt is vue framework , used for building "SSR,CSR,ESR" apps.
+
+Rendering: Types of apps
+
+Nuxt supports different rendering modes, "universal rendering", "client-side rendering" but also offers "hybrid-rendering" and the possibility to render your application on CDN Edge Servers.
+  
+What is Rendering?
+   Both the browser and server can interpret JavaScript code to render Vue.js components into HTML elements.
+ This step is called rendering. Nuxt supports both universal and client-side rendering.
+
+ By default, Nuxt uses universal rendering to provide better user experience, performance and to optimize search engine indexing, but you can switch rendering modes in one line of configuration.
+
+Universal Rendering
+.....................
+
+When the browser requests a URL with universal (server-side + client-side) rendering enabled, the server returns a fully rendered HTML page to the browser.
+
+
+Whether the page has been generated in advance and cached or is rendered on the fly, at some point, Nuxt has run the JavaScript (Vue.js) code in a server environment, producing an HTML document.
+
+Users immediately get the content of our application, contrary to client-side rendering. This step is similar to traditional server-side rendering performed by PHP or Ruby applications.
+
+To not lose the benefits of the client-side rendering method, such as dynamic interfaces and pages transitions, the Client (browser) loads the JavaScript code that runs on the Server in the background once the HTML document has been downloaded.
+
+Hyderation:
+The browser interprets it again (hence Universal rendering) and Vue.js takes control of the document and enables interactivity.
+	
+Making a static page interactive in the browser is called "Hydration."
+
+Universal rendering allows a Nuxt application to provide quick page load times while preserving the benefits of client-side rendering. Furthermore, as the content is already present in the HTML document, crawlers can index it without overhead.
+
+Client-Side Rendering : SPA
+
+Out of the box, a traditional Vue.js application is rendered in the browser (or client). Then, Vue.js generates HTML elements after the browser downloads and parses all the JavaScript code containing the instructions to create the current interface.
+
+ "
+Client-side rendering is a good choice for heavily interactive web applications that don't need indexing or whose users visit frequently. It can leverage browser caching to skip the download phase on subsequent visits, such as SaaS, back-office applications, or online games.
+"
+
+You can enable client-side only rendering with Nuxt in your
+
+nuxt.config.ts
+export default defineNuxtConfig({
+  ssr: false
+})
+
+Hybrid Rendering
+.................
+
+Hybrid rendering allows different caching rules per "route" using Route Rules and decides how the server should respond to a new request on a given URL.
+
+Previously every route/page of a Nuxt application and server must use the same rendering mode, universal or client-side
+
+In various cases, some pages could be generated at build time, while others should be client-side rendered. For example, think of a content website with an admin section. Every content page should be primarily static and generated once, but the admin section requires registration and behaves more like a dynamic application.
+
+Nuxt 3 includes route rules and hybrid rendering support. Using route rules you can define rules for a group of nuxt routes, change rendering mode or assign a cache strategy based on route!
+
+Nuxt server will automatically register corresponding middleware and wrap routes with cache handlers using Nitro caching layer.
+
+export default defineNuxtConfig({
+  routeRules: {
+    // Homepage pre-rendered at build time
+    '/': { prerender: true },
+    // Product page generated on-demand, revalidates in background
+    '/products/**': { swr: true },
+    // Blog post generated on-demand once until next deploy
+    '/blog/**': { isr: true },
+    // Admin dashboard renders only on client-side
+    '/admin/**': { ssr: false },
+    // Add cors headers on API routes
+    '/api/**': { cors: true },
+    // Redirects legacy urls
+    '/old-page': { redirect: '/new-page' }
+  }
+})
+eg:
+Properties and its meaning:
+
+redirect - Define server-side redirects.
+
+ssr - Disables server-side rendering for sections of your app and make them SPA-only with ssr: false
+
+cors - Automatically adds cors headers with cors: true - you can customize the output by overriding with headers
+
+headers - Add specific headers to sections of your site - for example, your assets
+swr -Stale-while-revalidate (SWR):  Add cache headers to the server response and cache it in the server or reverse proxy for a configurable TTL. The node-server preset of Nitro is able to cache the full response.
+isr ( Incremental Static Regeneration )- The behavior is the same as swr except that we are able to add the response to the CDN cache on platforms that support this (currently Netlify or Vercel)
+prerender - Prerenders routes at build time and includes them in your build as static assets
+experimentalNoScripts - Disables rendering of Nuxt scripts and JS resource hints for sections of your site
+...
+
+Edge-Side Rendering
+
+Edge-Side Rendering (ESR) is a powerful feature introduced in Nuxt 3 that allows the rendering of your Nuxt application closer to your users via edge servers of a Content Delivery Network (CDN). By leveraging ESR, you can ensure improved performance and reduced latency, thereby providing an enhanced user experience.
+
+
+With ESR, the rendering process is pushed to the 'edge' of the network - the CDN's edge servers. Note that ESR is more a deployment target than an actual rendering mode.
+When a request for a page is made, instead of going all the way to the original server, it's intercepted by the nearest edge server. This server generates the HTML for the page and sends it back to the user. This process minimizes the physical distance the data has to travel, reducing latency and loading the page faster.
+.....................................................................................
+                          Setup NUXT app
+.....................................................................................
+
+As you NUXT built on the top of vue 3.
+
+Vue 3 concepts like components using Composition api with setup attribute or function.
+
+Setup:
+New Project
+
+Prerequisites
+
+1.Node.js - v16.10.0 or newer
+2.Text editor - We recommend Visual Studio Code with the Volar Extension
+3.Terminal - In order to run Nuxt commands
+
+npx nuxi init <project-name>
+code <project-name>
+yarn install
+yarn dev -o
+.....................................................................................                           core features of NUXT 
+.....................................................................................
+
+1.Auto import 
+=>Nuxt auto-imports helper functions, composables and Vue APIs to use across your application without explicitly importing them.
+
+=>Based on the directory structure, every Nuxt application can also use auto-imports for its own components, composables and plugins. Components, composables or plugins can use these functions.
+....................................................................................
+                        Server Engine - Nitro
+
+Nuxt 3 is powered by a new server engine, Nitro.
+Nitro is an open source TypeScript framework to build ultra-fast web servers.
+The open engine powering Nuxt and open to everyone.
+
+Core features of Nitro:
+1.Api development
+2.auto imports
+3.provides high level configuration where you can configure your app and server .
+4.Typescript enabled 
+5.Caching Support with "redis"
+6.Storage support - both server and client side 
+7.Routing 
+   -Routing is based on file system
+   -routings are enabled based on directories 
+pages 
+   -Homepage 
+ http://localhost:3000/home 
+server/api  - Rest api 
+   /api/products  
+server/routes  -Rest api 
+server/middleares
+.....................................................................               
+                            components 
+
+Components Directory
+The components/ directory is where you put all your Vue components which can then be imported inside your pages or other components 
+Nuxt automatically imports any components in your components/ directory (along with components that are registered by any modules you may be using).
+
+| components/
+--| TheHeader.vue
+--| TheFooter.vue
+
+Eg:
+compoents/Greeter.vue 
+<script setup>
+</script>
+<template>
+    <h1>Greeter</h1>
+</template>
+.....................................................................................
+                           Views -Pages & Routing 
+.....................................................................................
+
+your-app 
+    -pages 
+
+pages 
+  -index.vue   => / - home page 
+  -about.vue   => /about 
+  -services.vue => /services 
+ 
+Nested Routing:
+  pages 
+    |
+    products 
+      index.vue   => /products 
+      details.vue  => /products/details 
+  
+
+Dynamic Routes
+	If you place anything within square brackets, it will be turned into a dynamic route parameter.
+ You can mix and match multiple parameters and even non-dynamic text within a file name or directory.
+ 
+ 
+ If you want a parameter to be optional, you must enclose it in double square brackets
+ 
+  for example, 
+
+   [id].vue  / [slug].vue   /1 or /2 
+pages/[slug].vue => file based 
+pages/[users]/index.vue 
+ 
+  ~/pages/[[slug]]/index.vue or ~/pages/[[slug]].vue will match both  / and /2.
+
+ [] -  should match : exact match 
+ [[]] -optional match 
+.....................................................................................
+                          layouts 
+.....................................................................................
+
+your-app 
+   |
+   layouts 
+      |
+      default.vue 
+
+layouts are used to share common ui segements across the application like header ,footer ,side bar ...
+
+default.vue
+<template>
+    <div class="mypage">
+      <nav>
+         <NuxtLink to="/about">About</NuxtLink> | 
+         <NuxtLink to="/services">Services</NuxtLink> |
+         <NuxtLink to="/products">Products</NuxtLink>
+      </nav>
+      <NuxtPage />
+    </div>
+  </template>
+  <style scoped>
+  .mypage {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3rem;
+    padding: 10rem;
+  }
+  </style>
+...................................................................................
+                      State Mutation
+...................................................................................
+components/TheCounter.vue 
+<script setup>
+//Name of the state, and reactive value
+const counter = useState('counter', () => 1)
+</script>
+<template>
+    <div>
+        <h1>Counter {{counter }}</h1>
+        <button @click="counter++">+</button>
+    </div>
+</template>
+
+pages/counter.vue 
+<script setup>
+</script>
+<template>
+    <TheCounter/>
+</template>
+....................................................................................
+                           Data fetching and server apis 
+....................................................................................
+....................................................................................
+				Data fetching
+....................................................................................
+
+Nuxt comes with two composables and a built-in library to perform data-fetching in browser or server environments: useFetch, useAsyncData and $fetch .
+
+Used together, they ensure cross-environment compatibility and efficient caching and avoid duplicate network calls.
+
+useFetch is the most straightforward way to handle data fetching in a component setup function.
+
+On the other hand, when wanting to make a network request based on user interaction, $fetch is almost always the right handler to go for.
+
+If you need more fine-grained control, you can use useAsyncData and $fetch 
+independently.
+
+Fetching data using external resources
+
+<script setup>
+const url ='https://jsonplaceholder.typicode.com/todos'
+const { data, pending, error, refresh } = await useFetch(url)
+</script>
+<template>
+    <h1>Todos App : Data fetching</h1>
+    <div>
+        <ul>
+        <li v-for="todo of data">
+            <span>
+                <span>{{todo.title}}</span>
+            </span>
+        </li>
+    </ul>
+    </div>
+</template>
+
+
+
+
+
+Nuxt automatically scans files inside these directories to register API and server handlers with HMR support:
+
+
+
+~/server/api    GET  /api/products 
+~/server/routes GET /products
+~/server/middleware //request and response interceptors
+
+api/routes/products.ts or products.get.ts => GET
+
+export default defineEventHandler((event) => {
+  return {
+    hello: 'world'
+  }
+})
+
+api/routes/products.post.ts => GET
+
+export default defineEventHandler((event) => {
+  //read payload 
+  return {
+    hello: 'world'
+  }
+})
+
+http://localhost:3000/api/hello 
+
+Inside component 
+const { data, pending, error, refresh } = await useFetch('/api/products')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
