@@ -6851,14 +6851,213 @@ How to setup api?
 
 https://github.com/typicode/json-server	
 
+.....................................................................................
+			  Statement Management- Pinia
+.....................................................................................
+
+What is State Management?
+  State represents the parts of the component that is variable depending on the user's action.
+ State Management is essentially a way to facilitate communication and sharing of data across the components.
+ It represents the state of your app that you can read from and write to.
 
 
+Statement implementations;
+1.react - redux
+2.Angular -ngRx
+3.Vuejs - 
+   Vuex - It is old tool which used Primarily in vue 2.x. Vuex almost in                 maintaince mode  
+   Pina - it is replacement for Vuex lib.
+
+What is Pina?
+  Pina is Redesign tool for Vue 3 Composition api.
+  Pina works both in vue 2 and Vue 3 as well.
+
+Why Pina?
+  Pina allows us to share "state" across components or pages.
+
+Core Concepts:
+1.Store
+   The store is object which encapsulate the component's /app biz logic
+
+How to create store?
+  There is factory function called "defineStore"
+
+Syntax:
+const store =  defineStore('NameofTheStore',{})
+
+The second parameter which is going take three segments.
+
+//state declaration
+
+//actions
+
+//computed properyt =reading values
+
+Pina Has two styles of code
+
+1.Options api Style pattern
+2.Composition api style pattern like setup attribute.
+
+Pina is just a lib which integrated as "plugin".
+
+Setup:
+npm init vue@latest
+
+Vue.js - The Progressive JavaScript Framework
+
+√ Project name: ... pina-app
+√ Add TypeScript? ... No / Yes
+√ Add JSX Support? ... No / Yes
+√ Add Vue Router for Single Page Application development? ... No / Yes
+√ Add Pinia for state management? ... No / Yes
+√ Add Vitest for Unit Testing? ... No / Yes
+√ Add an End-to-End Testing Solution? » No
+√ Add ESLint for code quality? ... No / Yes
 
 
+Pina Integration:
+import './assets/main.css'
+
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
+import App from './App.vue'
+import router from './router'
+
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')
 
 
+...................................................................................
+
+Pina Store Setup using Options api style:
 
 
+store/counter.js
+
+import { defineStore } from "pinia";
+
+export const useCounterStore = defineStore('counter', {
+  //state 
+  state: () => {
+    //return state:inital state 
+    return {
+      count: 10
+    }
+  },
+  //actions: biz logic: state mutation :reactive state 
+  actions: {
+    //methods
+    increment() {
+      return this.count++
+    }
+  },
+  //getters: Computed Propeties
+  getters: {
+    value: state => state.count,
+    doubleIt: state => state.count * 2
+  }
+
+
+});
+
+<script setup>
+import { useCounterStore } from '../stores/counter';
+const counterStore = useCounterStore()
+</script>
+<template>
+    <div>
+        <!-- <h2>Counter {{ counterStore.count }} Double Counter {{counterStore.doubleIt }}</h2> -->
+         <h2>Counter {{ counterStore.value }} Double Counter {{counterStore.doubleIt }}</h2>
+        <button @click="counterStore.increment">+</button>
+    </div>
+</template>
+.....................................................................................
+			Compostion Api Style 
+....................................................................................
+
+counter.js
+import { defineStore } from "pinia";
+import { computed, ref } from "vue";
+
+export const useCounterStore = defineStore('counter', () => {
+    //state declaration
+    const counter = ref(0)
+    //actions 
+    function increment() {
+        counter.value++
+    }
+    //getters: computed Properties 
+    const doubeIt = computed(() => counter.value * 2)
+
+    return { counter, increment, doubeIt }
+});
+
+Counter.vue
+<script setup>
+import { useCounterStore } from '../stores/counter';
+const counterStore = useCounterStore()
+console.log(counterStore)
+</script>
+<template>
+    <div>
+        <h1>Counter Store {{counterStore.counter }} Double It {{counterStore.doubeIt }}</h1>
+        <button @click="counterStore.increment">+</button>
+    </div>
+</template>
+....................................................................................
+			API Calls with Pina
+....................................................................................
+import { defineStore } from "pinia";
+
+export const useTodosStore = defineStore('todos', {
+    state: () => {
+        return {
+            todos: [],
+            err: null
+        }
+    },
+    actions: {
+        async getTodos(url) {
+            try {
+                const response = await fetch(url)
+                const todos = await response.json();
+                this.todos = todos
+                console.log(this.todos)
+            }
+            catch (err) {
+                this.err = err
+                console.log(this.err)
+            }
+        }
+    },
+    //getters 
+    getters: {
+        todoslist: state => state.todos
+    }
+
+})
+
+<script setup>
+import { onMounted } from 'vue'
+import { useTodosStore } from '../stores/todos';
+const todosStore = useTodosStore();
+
+onMounted(() => {
+    const url = 'https://jsonplaceholder.typicode.com/todos'
+    todosStore.getTodos(url) //When you trigger this api,getters would have been populted
+})
+</script>
+<template>
+    <div v-for="todo in todosStore.todoslist">
+        <h3>{{ todo.id }} {{ todo.title }}</h3>
+    </div>
+</template>
+<style></style>
 
 
 
